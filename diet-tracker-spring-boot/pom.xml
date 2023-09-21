@@ -14,7 +14,7 @@
 	<name>dietTracker</name>
 	<description>Diet Tracker Application</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>20</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
