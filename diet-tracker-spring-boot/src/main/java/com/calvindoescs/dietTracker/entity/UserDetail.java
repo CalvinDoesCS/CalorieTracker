@@ -2,23 +2,21 @@ package com.calvindoescs.dietTracker.entity;
 
 import jakarta.persistence.*;
 
-import java.util.UUID;
-
 @Entity
 @Table(name="user_detail")
 public class UserDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_detail_id")
-    private int user_detail_id;
+    private int userDetailId;
     @Column(name="first_name")
-    private String first_name;
+    private String firstName;
     @Column(name="last_name")
-    private String last_name;
+    private String lastName;
     @Column(name="gender")
     private String gender;
     @Column(name="phone_number")
-    private String phone_number;
+    private String phoneNumber;
     @Column(name="weight")
     private double weight;
     @Column(name="activity_level")
@@ -29,37 +27,37 @@ public class UserDetail {
     public UserDetail() {
     }
 
-    public UserDetail(String first_name, String last_name, String gender, String phone_number, double weight, String activityLevel, String dietaryPreferences) {
-        this.first_name = first_name;
-        this.last_name = last_name;
+    public UserDetail(String firstName, String lastName, String gender, String phoneNumber, double weight, String activityLevel, String dietaryPreferences) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.gender = gender;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
         this.weight = weight;
         this.activityLevel = activityLevel;
         this.dietaryPreferences = dietaryPreferences;
     }
 
-    public int getUser_detail_id() {
-        return user_detail_id;
+    public int getUserDetailId() {
+        return userDetailId;
     }
 
-    public void setUser_detail_id(int user_detail_id) {
-        this.user_detail_id = user_detail_id;
+    public void setUserDetailId(int userDetailId) {
+        this.userDetailId = userDetailId;
     }
-    public String getFirst_name() {
-        return first_name;
-    }
-
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getGender() {
@@ -70,12 +68,12 @@ public class UserDetail {
         this.gender = gender;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phone_number) {
-        this.phone_number = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public double getWeight() {
@@ -106,11 +104,11 @@ public class UserDetail {
     @Override
     public String toString() {
         return "UserDetail{" +
-                "user_detail_id=" + user_detail_id +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
+                "user_detail_id=" + userDetailId +
+                ", first_name='" + firstName + '\'' +
+                ", last_name='" + lastName + '\'' +
                 ", gender='" + gender + '\'' +
-                ", phone_number='" + phone_number + '\'' +
+                ", phone_number='" + phoneNumber + '\'' +
                 ", weight=" + weight +
                 ", activityLevel='" + activityLevel + '\'' +
                 ", dietaryPreferences='" + dietaryPreferences + '\'' +

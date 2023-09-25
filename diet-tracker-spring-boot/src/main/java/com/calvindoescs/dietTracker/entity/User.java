@@ -13,7 +13,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
-    private UUID user_id;
+    private UUID userId;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
@@ -26,7 +26,7 @@ public class User {
 
     @CreationTimestamp
     @Column(name = "registration_date")
-    private Timestamp reg_date;
+    private Timestamp regDate;
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name="user_detail_id")
@@ -41,12 +41,12 @@ public class User {
 
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -81,12 +81,12 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Timestamp getReg_date() {
-        return reg_date;
+    public Timestamp getRegDate() {
+        return regDate;
     }
 
-    public void setReg_date(Timestamp reg_date) {
-        this.reg_date = reg_date;
+    public void setRegDate(Timestamp regDate) {
+        this.regDate = regDate;
     }
 
     public UserDetail getUserDetail() {
@@ -100,12 +100,12 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "user_id=" + user_id +
+                "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", enabled=" + enabled +
-                ", reg_date=" + reg_date +
+                ", regDate=" + regDate +
                 ", userDetail=" + userDetail +
                 '}';
     }

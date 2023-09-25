@@ -33,15 +33,19 @@ public class UserDAOImpl implements UserDAO{
         return users.getResultList();
     }
 
-
     @Override
     @Transactional
-    public User save(User user) {
+    public void createUser(User user) {
+        entityManager.persist(user);
+    }
+    @Override
+    @Transactional
+    public User updateUser(User user) {
         return entityManager.merge(user);
     }
     @Override
     @Transactional
-    public UserDetail save(UserDetail user) {
+    public UserDetail updateUser(UserDetail user) {
         return entityManager.merge(user);
     }
     @Override

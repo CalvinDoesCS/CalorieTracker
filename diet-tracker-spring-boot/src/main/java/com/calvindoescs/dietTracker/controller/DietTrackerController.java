@@ -1,47 +1,46 @@
 package com.calvindoescs.dietTracker.controller;
 
-import com.calvindoescs.dietTracker.dao.UserDAO;
 import com.calvindoescs.dietTracker.entity.User;
-import org.antlr.v4.runtime.misc.NotNull;
+import com.calvindoescs.dietTracker.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping(value = "/api",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 public class DietTrackerController {
-    private UserDAO userDAO;
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
-    public DietTrackerController(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public DietTrackerController(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
     }
 
-    @GetMapping("/user")
+    @GetMapping(value = "/user", consumes = MediaType.ALL_VALUE)
     public List<User> getAllUser() {
-        return userDAO.findAll();
+        return userServiceImpl.findAllUsers();
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping(value="/user/{id}", consumes = MediaType.ALL_VALUE)
     public User getUser(@PathVariable("id") UUID id) {
-        return userDAO.findById(id);
+        return userServiceImpl.findUserById(id);
     }
 
-    @PostMapping(value = "/user",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/user")
     public void newUser(@RequestBody User user) {
-        userDAO.save(user);
+        userServiceImpl.createUser(user);
+    }
+    @PutMapping(value="/user")
+    public User updateUser(@RequestBody User user){
+        return userServiceImpl.updateUser(user);
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping(value="/user/{id}")
     public void deleteUser(@PathVariable("id") UUID id) {
-        userDAO.deleteById(id);
+        userServiceImpl.deleteUserById(id);
     }
 
 }
