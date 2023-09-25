@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value="/api",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 public class DietTrackerController {
     private UserServiceImpl userServiceImpl;
 
@@ -23,6 +23,7 @@ public class DietTrackerController {
     public List<User> getAllUser() {
         return userServiceImpl.findAllUsers();
     }
+
 
     @GetMapping(value="/user/{id}", consumes = MediaType.ALL_VALUE)
     public User getUser(@PathVariable("id") UUID id) {
