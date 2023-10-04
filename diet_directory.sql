@@ -2,8 +2,10 @@ CREATE DATABASE IF NOT EXISTS diet_directory;
 
 use diet_directory;
 
-DROP TABLE IF EXISTS user_detail;
 DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS user_detail;
+DROP TABLE IF EXISTS food_log;
+DROP TABLE IF EXISTS food;
 
 CREATE TABLE user_detail (
 	user_detail_id INT NOT NULL AUTO_INCREMENT,
@@ -18,7 +20,7 @@ CREATE TABLE user_detail (
 );
 
 CREATE TABLE user (
-    user_id BINARY(16),
+    user_id BINARY(16) NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
     password CHAR(60) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -29,8 +31,37 @@ CREATE TABLE user (
     CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_detail_id`) REFERENCES `user_detail` (`user_detail_id`)
 );
 
-   
+  -- Insert sample data into user_detail table
+INSERT INTO user_detail (first_name, last_name, gender, phone_number, weight, activity_level, dietary_preferences)
+VALUES
+    ('John', 'Doe', 'Male', '123-456-7890', 180.5, 'Moderate', 'Vegetarian'),
+    ('Jane', 'Smith', 'Female', '987-654-3210', 150.0, 'Active', 'Vegan'),
+    ('Chris', 'Johnson', 'Other', '555-555-5555', 200.2, 'Sedentary', 'Keto');
 
-
-
+-- Insert sample data into user table using UUID_TO_BIN()
+INSERT INTO user (user_id, username, password, email, user_detail_id)
+VALUES
+    (UUID_TO_BIN(UUID(), TRUE), 'johndoe', 'hashed_password_1', 'john@example.com', 1),
+    (UUID_TO_BIN(UUID(), TRUE), 'janesmith', 'hashed_password_2', 'jane@example.com', 2),
+    (UUID_TO_BIN(UUID(), TRUE), 'chrisjohnson', 'hashed_password_3', 'chris@example.com', 3);
+    
+CREATE TABLE food (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(50),
+    calories INT,
+    protein DECIMAL(10, 2),
+    carbohydrates DECIMAL(10, 2),
+    fat DECIMAL(10, 2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE food_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id BINARY(16), 
+    food_id INT,
+    log_date DATE,
+    quantity DECIMAL(10, 2),
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (food_id) REFERENCES food(id)
+);
 
