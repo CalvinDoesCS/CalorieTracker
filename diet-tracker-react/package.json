@@ -1,5 +1,5 @@
 {
-  "name": "diet-app-react",
+  "name": "diet-tracker-react",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,20 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.8.1",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@tanstack/react-query": "^4.35.3",
-    "@tanstack/react-query-devtools": "^4.35.3",
-    "axios": "^1.5.0",
-    "framer-motion": "^10.16.4",
     "react": "^18.2.0",
-    "react-devtools": "^4.28.0",
-    "react-dom": "^18.2.0",
-    "react-hook-form": "^7.46.2",
-    "react-router-dom": "^6.16.0",
-    "zod": "^3.22.3",
-    "zustand": "^4.4.1"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
