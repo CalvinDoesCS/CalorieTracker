@@ -2,15 +2,6 @@ import { Box, Heading, VStack } from "@chakra-ui/react";
 import FoodListBox from "../components/FoodListBox";
 import "../index.css";
 
-export interface Food {
-  name: string;
-  category: string;
-  calories: number;
-  protein: number;
-  carbs: number;
-  fats: number;
-}
-
 const HomePage = () => {
   const date = new Date();
     const showTime = date.getMonth() 

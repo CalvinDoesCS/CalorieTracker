@@ -1,6 +1,7 @@
 
 import { Box, HStack, Text } from '@chakra-ui/react';
-import { Food } from '../pages/HomePage';
+import Food from '../entities/food';
+
 
 interface Props{
     foodList: Food[];
