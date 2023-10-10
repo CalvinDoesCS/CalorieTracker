@@ -71,7 +71,7 @@ const AddItemButton = ({addFoodItem, listName} : Props) => {
 
           <ModalFooter>
             <Button onClick={handleSubmit(onSubmit)}colorScheme="blue" mr={3}>
-              Save
+              Add Item
             </Button>
             <Button onClick={onClose}>Cancel</Button>
           </ModalFooter>

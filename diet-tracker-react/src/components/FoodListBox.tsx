@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Center, Flex, Heading,Text,useColorModeValue, } from '@chakra-ui/react';
 import { useState } from 'react';
 import { Food } from '../pages/HomePage';
 import AddItemButton from './AddItemButton';
@@ -10,11 +10,23 @@ interface Props{
 
 const FoodListBox = ({listName} : Props) => {
   const [foodList, setFoodList] = useState<Food[]>([]);
+  const [totalCalorie, setTotalCalorie] = useState(0);
   return (
     <Box>
-        <Heading bgColor={'blue.300'} padding={2}>{listName}</Heading>
+        <Heading bgColor={useColorModeValue('gray.200', 'gray.900')} padding={2}>{listName}</Heading>
         <FoodList foodList={foodList} />
-        <AddItemButton listName={listName} addFoodItem={(food: Food) => setFoodList([...foodList, food])} />
+        <Flex padding={3} justifyContent={'space-between'}>
+          <AddItemButton listName={listName} addFoodItem={
+            (food: Food) => 
+              {
+                setFoodList([...foodList, food])
+                setTotalCalorie(Number(food.calories) + Number(totalCalorie))
+              }
+          } 
+          />
+          <Center>Total Calories: {totalCalorie}</Center>  
+        </Flex>
+        
     </Box>
  
   )
