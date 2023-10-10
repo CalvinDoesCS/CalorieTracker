@@ -1,5 +1,7 @@
 
-import { Button, FormControl, FormLabel, HStack, Input, Radio, RadioGroup } from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { Box, Button, Flex, FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightElement, Link, Radio, RadioGroup, Stack, useColorModeValue, Text } from '@chakra-ui/react';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 const SignUpForm = () => {
@@ -9,60 +11,81 @@ const SignUpForm = () => {
         console.log("Submitting the form", data);
       };
       
-    const genderOptions = [
-        { label: 'Male', value: 'Male' },
-        { label: 'Female', value: 'Female' },
-        { label: 'Other', value: 'Other' },
-      ];
-    const activityLevelOptions = [
-        { label: 'Inactive', value: 'Inactive' },
-        { label: 'Semi-Active', value: 'SemiActive' },
-        { label: 'Active', value: 'Active' },
-    ];
+    const [showPassword, setShowPassword] = useState(false)
     return (
-        <FormControl onSubmit={handleSubmit(onSubmit)}>
-                <FormLabel>Username</FormLabel>
-                <Input {...register("username")} id="username" type="text"/>
+        <Flex
+        minH={'100vh'}
+        align={'center'}
+        justify={'center'}>
+        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+          <Stack align={'center'}>
+            <Heading fontSize={'4xl'} textAlign={'center'}>
+              Sign up
+            </Heading>
+            <Text fontSize={'lg'} color={'gray.600'}>
+              to enjoy all of our cool features ✌️
+            </Text>
+          </Stack>
+          <Box
+            rounded={'lg'}
+            bg={useColorModeValue('white', 'gray.700')}
+            boxShadow={'lg'}
+            p={8}>
+            <Stack spacing={4}>
+              <HStack>
+                <Box>
+                  <FormControl id="firstName" isRequired>
+                    <FormLabel>First Name</FormLabel>
+                    <Input {...register("firstname")} type="text" />
+                  </FormControl>
+                </Box>
+                <Box>
+                  <FormControl id="lastName">
+                    <FormLabel>Last Name</FormLabel>
+                    <Input {...register("lastname")} type="text" />
+                  </FormControl>
+                </Box>
+              </HStack>
+              <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
-                <Input {...register("email")} id="email" type="email"/>
+                <Input {...register("email")} type="email" />
+              </FormControl>
+              <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input {...register("password")} id="password" type="password"/>
-                <FormLabel>Re-Enter Password</FormLabel>
-                <Input type="password"/>
-
-                <FormLabel>First Name</FormLabel>
-                <Input {...register("firstname")} id="first_name" type="text"/>
-                <FormLabel>Last Name</FormLabel>
-                <Input {...register("lastname")} id="last_name" type="text"/>
-
-                <FormLabel>Gender</FormLabel>
-                <RadioGroup>
-                    <HStack spacing='24px'>
-                        {genderOptions.map((option) => (
-                            <Radio key={option.value} value={option.value} {...register("gender")}>
-                                {option.label}
-                            </Radio>
-                        ))}
-                    </HStack>
-                </RadioGroup>
-
-                <FormLabel>Phone Number</FormLabel>
-                <Input {...register("phone_number")} id="phone_number" type="text"/>
-                <FormLabel>Weight</FormLabel>
-                <Input {...register("weight")}  id="weight" type="number"/>
-                <FormLabel>Activity Level</FormLabel>
-                <RadioGroup>
-                    <HStack spacing='24px'>
-                        {activityLevelOptions.map((option) => (
-                            <Radio key={option.value} value={option.value} {...register("activity_level")}>
-                                {option.label}
-                            </Radio>
-                        ))}
-                    </HStack>
-                </RadioGroup>
-
-                <Button marginY={2} onClick={handleSubmit(onSubmit)}>Submit</Button>
-        </FormControl>
+                <InputGroup>
+                  <Input  {...register("password")} type={showPassword ? 'text' : 'password'} />
+                  <InputRightElement h={'full'}>
+                    <Button
+                      variant={'ghost'}
+                      onClick={() => setShowPassword((showPassword) => !showPassword)}>
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Stack spacing={10} pt={2}>
+                <Button
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={'blue.400'}
+                  color={'white'}
+                  _hover={{
+                    bg: 'blue.500',
+                  }}
+                  onClick={handleSubmit(onSubmit)}>
+                  Sign up
+                </Button>
+              </Stack>
+              <Stack pt={6}>
+                <Text align={'center'}>
+                  Already a user? <Link color={'blue.400'}>Login</Link>
+                </Text>
+              </Stack>
+            </Stack>
+          </Box>
+        </Stack>
+      </Flex>
+        
     )
 }
 

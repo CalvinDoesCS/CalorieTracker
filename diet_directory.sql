@@ -21,7 +21,6 @@ CREATE TABLE user_detail (
 
 CREATE TABLE user (
     user_id BINARY(16) NOT NULL,
-    username VARCHAR(50) NOT NULL UNIQUE,
     password CHAR(60) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
 	registration_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -39,11 +38,11 @@ VALUES
     ('Chris', 'Johnson', 'Other', '555-555-5555', 200.2, 'Sedentary', 'Keto');
 
 -- Insert sample data into user table using UUID_TO_BIN()
-INSERT INTO user (user_id, username, password, email, user_detail_id)
+INSERT INTO user (user_id, password, email, user_detail_id)
 VALUES
-    (UUID_TO_BIN(UUID(), TRUE), 'johndoe', 'hashed_password_1', 'john@example.com', 1),
-    (UUID_TO_BIN(UUID(), TRUE), 'janesmith', 'hashed_password_2', 'jane@example.com', 2),
-    (UUID_TO_BIN(UUID(), TRUE), 'chrisjohnson', 'hashed_password_3', 'chris@example.com', 3);
+    (UUID_TO_BIN(UUID(), TRUE), 'hashed_password_1', 'john@example.com', 1),
+    (UUID_TO_BIN(UUID(), TRUE), 'hashed_password_2', 'jane@example.com', 2),
+    (UUID_TO_BIN(UUID(), TRUE), 'hashed_password_3', 'chris@example.com', 3);
     
 CREATE TABLE food (
     id INT AUTO_INCREMENT PRIMARY KEY,
