@@ -18,6 +18,12 @@ class APIClient<T> {
   get = (id: number | string) =>{
     return axiosInstance.get<T>(this.endpoint + '/' + id).then(res=>res.data)
   }
+  post = (object: T) => {
+    return axiosInstance
+      .post(this.endpoint,object)
+      .then(res=>res.data)
+
+  }
 }
 
 export default APIClient

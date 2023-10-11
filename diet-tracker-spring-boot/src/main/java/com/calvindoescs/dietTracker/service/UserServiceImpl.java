@@ -2,6 +2,7 @@ package com.calvindoescs.dietTracker.service;
 
 import com.calvindoescs.dietTracker.dao.UserDAO;
 import com.calvindoescs.dietTracker.entity.User;
+import com.calvindoescs.dietTracker.entity.UserDetail;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +21,9 @@ public class UserServiceImpl implements UserService{
         return userDAO.findById(id);
     }
     public void createUser(User user){
+        if(user.getUserDetail() == null){
+            user.setUserDetail(new UserDetail());
+        }
         userDAO.createUser(user);
     }
     public User updateUser(User user){

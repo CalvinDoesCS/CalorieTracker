@@ -21,10 +21,14 @@ public class UserDetail {
     private double weight;
     @Column(name="activity_level")
     private String activityLevel;
-    @Column(name="dietary_preferences")
-    private String dietaryPreferences;
 
     public UserDetail() {
+        this.firstName = "";
+        this.lastName = "";
+        this.gender = "";
+        this.phoneNumber = "";
+        this.weight = -1;
+        this.activityLevel = "";
     }
 
     public UserDetail(String firstName, String lastName, String gender, String phoneNumber, double weight, String activityLevel, String dietaryPreferences) {
@@ -34,7 +38,6 @@ public class UserDetail {
         this.phoneNumber = phoneNumber;
         this.weight = weight;
         this.activityLevel = activityLevel;
-        this.dietaryPreferences = dietaryPreferences;
     }
 
     public int getUserDetailId() {
@@ -92,14 +95,6 @@ public class UserDetail {
         this.activityLevel = activityLevel;
     }
 
-    public String getDietaryPreferences() {
-        return dietaryPreferences;
-    }
-
-    public void setDietaryPreferences(String dietaryPreferences) {
-        this.dietaryPreferences = dietaryPreferences;
-    }
-
 
     @Override
     public String toString() {
@@ -111,7 +106,6 @@ public class UserDetail {
                 ", phone_number='" + phoneNumber + '\'' +
                 ", weight=" + weight +
                 ", activityLevel='" + activityLevel + '\'' +
-                ", dietaryPreferences='" + dietaryPreferences + '\'' +
                 '}';
     }
 }

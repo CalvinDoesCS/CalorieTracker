@@ -2,20 +2,19 @@ CREATE DATABASE IF NOT EXISTS diet_directory;
 
 use diet_directory;
 
+DROP TABLE IF EXISTS food_log;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS user_detail;
-DROP TABLE IF EXISTS food_log;
 DROP TABLE IF EXISTS food;
 
 CREATE TABLE user_detail (
 	user_detail_id INT NOT NULL AUTO_INCREMENT,
-    first_name VARCHAR(50),
-    last_name VARCHAR(50),
-	gender ENUM('Male', 'Female', 'Other'),
+    first_name VARCHAR(50) DEFAULT "",
+    last_name VARCHAR(50) DEFAULT "",
+	gender ENUM('Male', 'Female', 'Other',''),
     phone_number VARCHAR(20),
     weight DECIMAL(5, 2),
     activity_level VARCHAR(255),
-    dietary_preferences VARCHAR(255),
 	PRIMARY KEY (`user_detail_id`)
 );
 
@@ -24,18 +23,18 @@ CREATE TABLE user (
     password CHAR(60) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
 	registration_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    user_detail_id INT NOT NULL UNIQUE,
+    user_detail_id INT UNIQUE,
 	enabled TINYINT NOT NULL DEFAULT 1,
     PRIMARY KEY(user_id),
     CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_detail_id`) REFERENCES `user_detail` (`user_detail_id`)
 );
 
   -- Insert sample data into user_detail table
-INSERT INTO user_detail (first_name, last_name, gender, phone_number, weight, activity_level, dietary_preferences)
+INSERT INTO user_detail (first_name, last_name, gender, phone_number, weight, activity_level)
 VALUES
-    ('John', 'Doe', 'Male', '123-456-7890', 180.5, 'Moderate', 'Vegetarian'),
-    ('Jane', 'Smith', 'Female', '987-654-3210', 150.0, 'Active', 'Vegan'),
-    ('Chris', 'Johnson', 'Other', '555-555-5555', 200.2, 'Sedentary', 'Keto');
+    ('John', 'Doe', 'Male', '123-456-7890', 180.5, 'Moderate'),
+    ('Jane', 'Smith', 'Female', '987-654-3210', 150.0, 'Active'),
+    ('Chris', 'Johnson', 'Other', '555-555-5555', 200.2, 'Sedentary');
 
 -- Insert sample data into user table using UUID_TO_BIN()
 INSERT INTO user (user_id, password, email, user_detail_id)

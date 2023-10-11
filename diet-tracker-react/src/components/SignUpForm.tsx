@@ -3,15 +3,23 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightElement, Link, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import useAddUser from '../hooks/useAddUser';
 
 const SignUpForm = () => {
     const {register, handleSubmit} = useForm();
 
+    const addUser = useAddUser(()=>{});
+
     const onSubmit = (data: FieldValues) => {
+        addUser.mutate({
+          email: data.email,
+          password: data.password
+        })
         console.log("Submitting the form", data);
       };
       
     const [showPassword, setShowPassword] = useState(false)
+
     return (
         <Flex
         minH={'100vh'}
