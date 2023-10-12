@@ -1,14 +1,17 @@
 
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Box, Button, Flex, FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightElement, Link, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightElement, Link, Spinner, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useAddUser from '../hooks/useAddUser';
+import {useNavigate } from 'react-router-dom';
 
 const SignUpForm = () => {
+
+    const navigate = useNavigate();
     const {register, handleSubmit} = useForm();
 
-    const addUser = useAddUser(()=>{});
+    const addUser = useAddUser();
 
     const onSubmit = (data: FieldValues) => {
         addUser.mutate({
@@ -72,17 +75,31 @@ const SignUpForm = () => {
                 </InputGroup>
               </FormControl>
               <Stack spacing={10} pt={2}>
-                <Button
-                  loadingText="Submitting"
-                  size="lg"
-                  bg={'blue.400'}
-                  color={'white'}
-                  _hover={{
-                    bg: 'blue.500',
-                  }}
-                  onClick={handleSubmit(onSubmit)}>
-                  Sign up
-                </Button>
+                {
+                  addUser.isLoading ? (<Center> <Spinner></Spinner> </Center>) 
+                  : (
+                    <>
+                      {addUser.isError ? (<Text textColor={"red"}>Something went wrong</Text>) : null}
+                      <Button
+                      loadingText="Submitting"
+                      size="lg"
+                      bg={'blue.400'}
+                      color={'white'}
+                      _hover={{
+                        bg: 'blue.500',
+                      }}
+                      onClick={handleSubmit(onSubmit)}>
+                      Sign up
+                    </Button>
+                    {addUser.isSuccess ? 
+                        <>
+                          <Text textColor={"green"}>User Successfully Added! Redirecting</Text>
+                          {navigate("/")}
+                        </>
+                      : null}
+                    </>
+                  ) 
+                }
               </Stack>
               <Stack pt={6}>
                 <Text align={'center'}>

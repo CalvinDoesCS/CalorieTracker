@@ -1,6 +1,7 @@
-import { Box, Heading, VStack } from "@chakra-ui/react";
-import FoodListBox from "../components/FoodListBox";
+import { Box, Heading, VStack,useColorModeValue } from "@chakra-ui/react";
+import FoodListBox from "../components/FoodLoggerBox/FoodListBox";
 import "../index.css";
+import FoodListBoxes from "../components/FoodLoggerBox/FoodListBoxes";
 
 const HomePage = () => {
   const date = new Date();
@@ -8,22 +9,11 @@ const HomePage = () => {
         + '/' + date.getDate() 
         + "/" + date.getFullYear();
   return (
-    <VStack spacing={0}>
+    <VStack spacing={4}>
 
       <Heading my={2}> Food Logger for {showTime} </Heading>
-
-      <Box width={{ base: "100%", md: "60%", lg: "40%" }} border={"1px"} borderBottom={"0px"}>
-        {" "}
-        <FoodListBox listName="BreakFast" />
-      </Box>
-      <Box width={{ base: "100%", md: "60%", lg: "40%" }} border={"1px"} borderTop={"0px"} borderBottom={"0px"}>
-        {" "}
-        <FoodListBox listName="Lunch" />
-      </Box>
-      <Box width={{ base: "100%", md: "60%", lg: "40%" }} border={"1px"} borderTop={"0px"} >
-        {" "}
-        <FoodListBox listName="Dinner" />
-      </Box>
+      <FoodListBoxes boxTitles={["Breakfast", "Lunch", "Dinner"]}/>
+      
     </VStack>
   );
 };

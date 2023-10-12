@@ -1,20 +1,20 @@
 import {
-    Button,
-    FormControl,
-    FormLabel,
-    Input,
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalFooter,
-    ModalHeader,
-    ModalOverlay,
-    useDisclosure,
-    Text
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure
 } from "@chakra-ui/react";
 import { FieldValues, useForm } from "react-hook-form";
-import { Food } from "../pages/HomePage";
+import Food from "../../entities/Food";
 
 interface Props{
     listName: string;

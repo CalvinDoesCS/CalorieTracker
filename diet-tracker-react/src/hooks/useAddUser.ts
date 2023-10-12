@@ -1,13 +1,13 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
-import APIClient from "../services/api-cilent";
+import { useMutation } from "@tanstack/react-query";
 import User from "../entities/User";
+import APIClient from "../services/api-cilent";
 
 const apiClient = new APIClient<User>('/user');
 
-const useAddUser = (onAdd: () => void) =>{
-  return useMutation({
+const useAddUser = () =>{
+  return useMutation<User,Error,User>({
     mutationFn: (user : User) => apiClient.post(user)
-    .then((res) => res.data)
+    .then((res) => res.data),
   })
 }
 export default useAddUser;
