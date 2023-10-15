@@ -34,6 +34,7 @@ public class DietTrackerController {
     public void newUser(@RequestBody User user) {
         userServiceImpl.createUser(user);
     }
+
     @PutMapping(value="/user")
     public User updateUser(@RequestBody User user){
         return userServiceImpl.updateUser(user);

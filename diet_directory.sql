@@ -3,6 +3,7 @@ CREATE DATABASE IF NOT EXISTS diet_directory;
 use diet_directory;
 
 DROP TABLE IF EXISTS food_log;
+DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS user_detail;
 DROP TABLE IF EXISTS food;
@@ -20,7 +21,7 @@ CREATE TABLE user_detail (
 
 CREATE TABLE user (
     user_id BINARY(16) NOT NULL,
-    password CHAR(60) NOT NULL,
+    password CHAR(68) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
 	registration_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     user_detail_id INT UNIQUE,
@@ -28,6 +29,15 @@ CREATE TABLE user (
     PRIMARY KEY(user_id),
     CONSTRAINT `user_ibfk_1` FOREIGN KEY (`user_detail_id`) REFERENCES `user_detail` (`user_detail_id`)
 );
+
+create table role (
+	role_id INT AUTO_INCREMENT NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	role VARCHAR(50) NOT NULL,
+    PRIMARY KEY(role_id),
+	constraint fk_role_users foreign key(email) references user(email) 
+);
+create unique index ix_auth_email on role (email,role);
 
   -- Insert sample data into user_detail table
 INSERT INTO user_detail (first_name, last_name, gender, phone_number, weight, activity_level)

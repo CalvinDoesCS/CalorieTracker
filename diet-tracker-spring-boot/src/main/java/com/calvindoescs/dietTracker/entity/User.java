@@ -3,8 +3,9 @@ package com.calvindoescs.dietTracker.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.sql.Timestamp;
-
 import java.util.UUID;
 
 @Entity
@@ -26,17 +27,19 @@ public class User {
     @Column(name = "registration_date")
     private Timestamp regDate;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name="user_detail_id")
     private UserDetail userDetail;
+
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
+    private List <Role> roles;
+
     public User() {
     }
 
-    public User(String password, String email, String first_name, String last_name, String gender, String phone_number, double weight, String activityLevel, String dietaryPreferences) {
-
+    public User(String password, String email) {
         this.password = password;
         this.email = email;
-
     }
 
     public UUID getUserId() {
@@ -86,6 +89,20 @@ public class User {
     public void setUserDetail(UserDetail userDetail) {
         this.userDetail = userDetail;
     }
+    public void addRole(Role role){
+        if(roles == null){
+            roles = new ArrayList<>();
+        }
+        role.setUser(this);
+        roles.add(role);
+    }
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public String toString() {
@@ -95,7 +112,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", enabled=" + enabled +
                 ", regDate=" + regDate +
-                ", userDetail=" + userDetail +
-                '}';
+                ", userDetail=" + userDetail;
     }
 }

@@ -1,27 +1,26 @@
 package com.calvindoescs.dietTracker.entity;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name="roles")
-public class Roles {
+@Table(name="role")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="role_id")
     private int roleId;
 
-    @Column(name="email")
-    private String email;
-
     @Column(name="role")
     private String role;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="email", referencedColumnName = "email")
+    private User user;
 
-    public Roles(String email, String role) {
-        this.email = email;
+    public Role() {
+    }
+
+    public Role(String role) {
         this.role = role;
     }
 
@@ -41,29 +40,20 @@ public class Roles {
         this.role = role;
     }
 
-    public String getEmail() {
-        return email;
+    public User getUser() {
+        return user;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
         return "Roles{" +
                 "roleId=" + roleId +
-                ", email='" + email + '\'' +
                 ", role='" + role + '\'' +
-                ", users=" + users +
+                ", users=" + user +
                 '}';
     }
 }

@@ -1,28 +1,28 @@
 'use client'
 
 import {
-  Box,
-  Flex,
-  Text,
-  IconButton,
-  Button,
-  Stack,
-  Collapse,
-  Icon,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  useColorModeValue,
-  useBreakpointValue,
-  useDisclosure,
-} from '@chakra-ui/react'
-import {
-  HamburgerIcon,
-  CloseIcon,
   ChevronDownIcon,
   ChevronRightIcon,
+  CloseIcon,
+  HamburgerIcon,
 } from '@chakra-ui/icons'
-import ColorModeSwitch from './ColorModeSwitch'
+import {
+  Box,
+  Button,
+  Collapse,
+  Flex,
+  Icon,
+  IconButton,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Stack,
+  Text,
+  useBreakpointValue,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure()
@@ -68,21 +68,21 @@ export default function NavBar() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-          <Button as={'a'} fontSize={'sm'} fontWeight={400} variant={'link'} href={'#'}>
-            Sign In
+          <Button as={Link} fontSize={'sm'} fontWeight={400} variant={'link'} to="/signin">
+                Sign In
           </Button>
           <Button
-            as={'a'}
+            as={Link}
             display={{ base: 'none', md: 'inline-flex' }}
             fontSize={'sm'}
             fontWeight={600}
             color={'white'}
             bg={'pink.400'}
-            href={'/signup'}
+            to="/signup"
             _hover={{
               bg: 'pink.300',
             }}>
-            Sign Up
+              Sign Up
           </Button>
 
         </Stack>

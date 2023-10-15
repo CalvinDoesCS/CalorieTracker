@@ -1,7 +1,6 @@
-import { Box, Heading, VStack,useColorModeValue } from "@chakra-ui/react";
-import FoodListBox from "../components/FoodLoggerBox/FoodListBox";
-import "../index.css";
+import { Heading, VStack } from "@chakra-ui/react";
 import FoodListBoxes from "../components/FoodLoggerBox/FoodListBoxes";
+import "../index.css";
 
 const HomePage = () => {
   const date = new Date();

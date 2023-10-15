@@ -9,7 +9,7 @@ const FoodListBoxes = ({boxTitles} : Props) => {
   return (
     <>
         {boxTitles.map( (boxTitle,index) =>
-            <Box key={index} width={{ base: "100%", md: "60%", lg: "40%" }} rounded={'lg'} boxShadow={'lg'} bg={useColorModeValue('white', 'gray.700')}>
+            <Box key={index} width={{ base: "lg", md: "md", lg: "md" }} rounded={'lg'} boxShadow={'lg'} bg={useColorModeValue('white', 'gray.700')}>
                 <FoodListBox listName={boxTitle}/>
             </Box>
         )}
