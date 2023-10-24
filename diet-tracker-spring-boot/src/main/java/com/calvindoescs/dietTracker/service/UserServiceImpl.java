@@ -1,6 +1,5 @@
 package com.calvindoescs.dietTracker.service;
 
-import com.calvindoescs.dietTracker.dao.UserDAO;
 import com.calvindoescs.dietTracker.entity.Role;
 import com.calvindoescs.dietTracker.entity.User;
 import com.calvindoescs.dietTracker.entity.UserDetail;
@@ -10,10 +9,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 @Service
-public class UserServiceImpl implements UserService{
-    private UserDAO userDAO;
+public class UserDAOImpl implements UserDAO {
+    private com.calvindoescs.dietTracker.dao.UserDAO userDAO;
 
-    public UserServiceImpl(UserDAO userDAO) {
+    public UserDAOImpl(com.calvindoescs.dietTracker.dao.UserDAO userDAO) {
         this.userDAO = userDAO;
     }
     public List<User> findAllUsers(){
@@ -22,6 +21,10 @@ public class UserServiceImpl implements UserService{
     public User findUserById(UUID id){
         return userDAO.findById(id);
     }
+    public User findUserByEmail(String email) {
+        return userDAO.findByEmail(email);
+    }
+
     public void createUser(User user){
         if(user.getUserDetail() == null) {
             user.setUserDetail(new UserDetail());

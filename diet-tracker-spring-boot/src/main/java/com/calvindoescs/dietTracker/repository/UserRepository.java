@@ -1,10 +1,11 @@
-package com.calvindoescs.dietTracker.dao;
+package com.calvindoescs.dietTracker.repository;
 
 import com.calvindoescs.dietTracker.entity.User;
 import com.calvindoescs.dietTracker.entity.UserDetail;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +28,19 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
+    public User findByEmail(String email) throws UsernameNotFoundException {
+        return entityManager
+                .createQuery("SELECT u FROM User u WHERE u.email =:data", User.class)
+                .setParameter("data",email)
+                .getSingleResult();
+
+    }
+
+    @Override
     public List<User> findAll() {
         TypedQuery<User> users = entityManager.createQuery("SELECT u FROM User u " +
-                                                              "JOIN FETCH u.userDetail",User.class);
+                                                              "JOIN FETCH u.userDetail ud " +
+                                                              "LEFT JOIN FETCH u.roles r",User.class);
         return users.getResultList();
     }
 
