@@ -1,4 +1,4 @@
-package com.calvindoescs.dietTracker.dao;
+package com.calvindoescs.dietTracker.repository;
 
 import com.calvindoescs.dietTracker.entity.User;
 import com.calvindoescs.dietTracker.entity.UserDetail;

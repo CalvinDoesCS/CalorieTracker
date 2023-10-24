@@ -22,11 +22,13 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure()
-
+  const logout = () => {
+    localStorage.clear();
+    }
   return (
     <Box>
       <Flex
@@ -84,7 +86,20 @@ export default function NavBar() {
             }}>
               Sign Up
           </Button>
-
+          <Button           
+            as={Link}
+            display={{ base: 'none', md: 'inline-flex' }}
+            fontSize={'sm'}
+            fontWeight={600}
+            color={'white'}
+            bg={'pink.400'}
+            onClick={logout}
+            to="/signin"
+            _hover={{
+              bg: 'pink.300',
+            }}>
+              Log Out    
+          </Button>
         </Stack>
       </Flex>
 

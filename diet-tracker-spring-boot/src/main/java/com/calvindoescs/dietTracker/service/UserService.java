@@ -5,7 +5,7 @@ import com.calvindoescs.dietTracker.entity.User;
 import java.util.List;
 import java.util.UUID;
 
-public interface UserDAO {
+public interface UserService {
     public List<User> findAllUsers();
     public User findUserById(UUID id);
     public User findUserByEmail(String email);

@@ -1,16 +1,23 @@
 package com.calvindoescs.dietTracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.sql.Timestamp;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="user")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
@@ -31,13 +38,19 @@ public class User {
     @JoinColumn(name="user_detail_id")
     private UserDetail userDetail;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
+    @ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @JoinTable(name = "user_role" ,joinColumns =
+    @JoinColumn ( name = " user_id" ), inverseJoinColumns =
+    @JoinColumn(name = "role_id"))
+    @JsonManagedReference
     private List <Role> roles;
 
+    @OneToOne(mappedBy = "user")
+    private RefreshToken refreshToken;
     public User() {
     }
 
-    public User(String password, String email) {
+    public User(String email, String password) {
         this.password = password;
         this.email = email;
     }
@@ -50,8 +63,44 @@ public class User {
         this.userId = userId;
     }
 
+    @Override
+    @JsonIgnore
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRole())) // Assuming Role implements GrantedAuthority
+                .collect(Collectors.toList());
+
+    }
+    @Override
+    @JsonIgnore
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+            return enabled == 1;
     }
 
     public void setPassword(String password) {
@@ -93,7 +142,7 @@ public class User {
         if(roles == null){
             roles = new ArrayList<>();
         }
-        role.setUser(this);
+        role.addUser(this);
         roles.add(role);
     }
     public List<Role> getRoles() {
@@ -104,6 +153,14 @@ public class User {
         this.roles = roles;
     }
 
+    public RefreshToken getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(RefreshToken refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -112,6 +169,8 @@ public class User {
                 ", email='" + email + '\'' +
                 ", enabled=" + enabled +
                 ", regDate=" + regDate +
-                ", userDetail=" + userDetail;
+                ", userDetail=" + userDetail +
+                ", roles=" + roles +
+                '}';
     }
 }

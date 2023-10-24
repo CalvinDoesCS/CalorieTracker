@@ -1,4 +1,4 @@
-package com.calvindoescs.dietTracker.controller;
+package com.calvindoescs.dietTracker.payload;
 
 public class AuthenticationRequest {
 

@@ -1,7 +1,10 @@
 package com.calvindoescs.dietTracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 @Entity
 @Table(name="role")
 public class Role {
@@ -13,9 +16,9 @@ public class Role {
     @Column(name="role")
     private String role;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="email", referencedColumnName = "email")
-    private User user;
+    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy= "roles")
+    @JsonBackReference
+    private List<User> users;
 
     public Role() {
     }
@@ -39,22 +42,26 @@ public class Role {
     public void setRole(String role) {
         this.role = role;
     }
-
-    public User getUser() {
-        return user;
+    public void addUser(User user){
+        if(users == null){
+            users = new ArrayList<>();
+        }
+        users.add(user);
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override
     public String toString() {
-        return "Roles{" +
+        return "Role{" +
                 "roleId=" + roleId +
-                ", role='" + role + '\'' +
-                ", users=" + user +
-                '}';
+                ", role='" + role + '\'';
     }
 }
 

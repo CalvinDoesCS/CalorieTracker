@@ -1,7 +1,7 @@
 
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Box, Button, Center, Flex, FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightElement, Link, Spinner, Stack, Text, useColorModeValue } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import useAddUser from '../hooks/useAddUser';
 import {useNavigate } from 'react-router-dom';
@@ -18,11 +18,15 @@ const SignUpForm = () => {
           email: data.email,
           password: data.password
         })
-        console.log("Submitting the form", data);
+        console.log("Submitting the form", addUser);
       };
-      
+    
     const [showPassword, setShowPassword] = useState(false)
-
+    useEffect(()=>{
+      if(addUser.isSuccess){
+        navigate("/");
+      }
+    },[addUser]);
     return (
         <Flex
         minH={'70vh'}
@@ -44,7 +48,7 @@ const SignUpForm = () => {
             <Stack spacing={4}>
               <HStack>
                 <Box>
-                  <FormControl id="firstName" isRequired>
+                  <FormControl id="firstName">
                     <FormLabel>First Name</FormLabel>
                     <Input {...register("firstname")} type="text" />
                   </FormControl>
@@ -90,12 +94,6 @@ const SignUpForm = () => {
                       onClick={handleSubmit(onSubmit)}>
                       Sign up
                     </Button>
-                    {addUser.isSuccess ? 
-                        <>
-                          <Text textColor={"green"}>User Successfully Added! Redirecting</Text>
-                          {navigate("/")}
-                        </>
-                      : null}
                     </>
                   ) 
                 }

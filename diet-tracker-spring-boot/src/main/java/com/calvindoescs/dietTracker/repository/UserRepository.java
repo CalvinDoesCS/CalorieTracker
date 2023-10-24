@@ -13,12 +13,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public class UserDAOImpl implements UserDAO{
+public class UserRepository implements UserDAO{
 
     EntityManager entityManager;
 
     @Autowired
-    public UserDAOImpl(EntityManager entityManager) {
+    public UserRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

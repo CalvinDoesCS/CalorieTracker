@@ -2,8 +2,10 @@ CREATE DATABASE IF NOT EXISTS diet_directory;
 
 use diet_directory;
 
+DROP TABLE IF EXISTS user_role;
 DROP TABLE IF EXISTS food_log;
 DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS refresh_token;
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS user_detail;
 DROP TABLE IF EXISTS food;
@@ -32,27 +34,25 @@ CREATE TABLE user (
 
 create table role (
 	role_id INT AUTO_INCREMENT NOT NULL,
-	email VARCHAR(255) NOT NULL,
 	role VARCHAR(50) NOT NULL,
-    PRIMARY KEY(role_id),
-	constraint fk_role_users foreign key(email) references user(email) 
+    PRIMARY KEY(role_id)
 );
 create unique index ix_auth_email on role (email,role);
 
-  -- Insert sample data into user_detail table
-INSERT INTO user_detail (first_name, last_name, gender, phone_number, weight, activity_level)
-VALUES
-    ('John', 'Doe', 'Male', '123-456-7890', 180.5, 'Moderate'),
-    ('Jane', 'Smith', 'Female', '987-654-3210', 150.0, 'Active'),
-    ('Chris', 'Johnson', 'Other', '555-555-5555', 200.2, 'Sedentary');
-
--- Insert sample data into user table using UUID_TO_BIN()
-INSERT INTO user (user_id, password, email, user_detail_id)
-VALUES
-    (UUID_TO_BIN(UUID(), TRUE), 'hashed_password_1', 'john@example.com', 1),
-    (UUID_TO_BIN(UUID(), TRUE), 'hashed_password_2', 'jane@example.com', 2),
-    (UUID_TO_BIN(UUID(), TRUE), 'hashed_password_3', 'chris@example.com', 3);
-    
+CREATE TABLE user_role (
+    user_id BINARY(16) NOT NULL,
+    role_id INT NOT NULL,
+    PRIMARY KEY(user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (role_id) REFERENCES role(role_id)
+);
+CREATE TABLE refresh_token (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    user_id BINARY(16) NOT NULL,
+    token VARCHAR(255) NOT NULL UNIQUE,
+    expiry_date TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES user(user_id)
+);
 CREATE TABLE food (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,

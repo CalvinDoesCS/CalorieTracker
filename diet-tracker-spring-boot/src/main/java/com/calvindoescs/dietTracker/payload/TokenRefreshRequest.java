@@ -1,2 +1,13 @@
-package com.calvindoescs.dietTracker.payload;public class TokenRefreshRequest {
+package com.calvindoescs.dietTracker.payload;
+
+public class TokenRefreshRequest {
+    private String refreshToken;
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

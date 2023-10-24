@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import SignUpForm from "./components/SignUpForm";
 import LoginForm from "./components/LoginForm";
+import ProtectedRoute from "./util/ProtectedRoute";
 
 const router = createBrowserRouter([  
     {
@@ -13,7 +14,7 @@ const router = createBrowserRouter([
       children: [
         {
           index: true,
-          element: <HomePage />,
+          element: <ProtectedRoute><HomePage/></ProtectedRoute>,
         },
         {
           path: "/signup",

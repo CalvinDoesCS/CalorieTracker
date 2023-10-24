@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig } from "axios";
 const axiosInstance = axios.create({
     baseURL: "http://localhost:8080/api"
   });
-
 class APIClient<T> {
   endpoint: string;
 
@@ -22,7 +21,6 @@ class APIClient<T> {
     return axiosInstance
       .post(this.endpoint,object)
       .then(res=>res.data)
-
   }
 }
 

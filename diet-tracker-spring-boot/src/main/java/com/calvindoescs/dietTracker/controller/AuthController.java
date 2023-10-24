@@ -1,33 +1,42 @@
 package com.calvindoescs.dietTracker.controller;
 
-import com.calvindoescs.dietTracker.entity.User;
-import com.calvindoescs.dietTracker.service.UserServiceImpl;
+import com.calvindoescs.dietTracker.entity.RefreshToken;
+import com.calvindoescs.dietTracker.payload.AuthenticationRequest;
+import com.calvindoescs.dietTracker.payload.AuthenticationResponse;
+import com.calvindoescs.dietTracker.payload.TokenRefreshRequest;
+import com.calvindoescs.dietTracker.service.RefreshTokenService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-    private UserServiceImpl userService;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public AuthController(UserServiceImpl userServiceImpl) {
-        this.userService = userServiceImpl;
+    public AuthController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/signin")
-    public String signin(){
-        return "Sucessfully SignUp";
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
+        return ResponseEntity.ok(authenticationService.register(request));
     }
-    @PostMapping("/signup")
-    public String signup(@RequestBody User user){
-        System.out.println("Creating User");
-        System.out.println(user);
-        userService.createUser(user);
-        return "Sucessfully SignUp";
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> signin (HttpServletResponse response, @RequestBody AuthenticationRequest request) {
+        return ResponseEntity.ok(authenticationService.authenticate(response,request));
+     }
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(HttpServletRequest request, @RequestHeader("acesss_token") TokenRefreshRequest authorizationHeader) {
+        return ResponseEntity.ok(request.getCookies());
+    }
+    @PostMapping("/signout")
+    public String signout(){
+
+        return "Successfully Logged out";
     }
 }

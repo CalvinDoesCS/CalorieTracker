@@ -1,4 +1,4 @@
-package com.calvindoescs.dietTracker.controller;
+package com.calvindoescs.dietTracker.entity;
 
 import com.calvindoescs.dietTracker.entity.User;
 import jakarta.persistence.*;
@@ -6,14 +6,15 @@ import jakarta.persistence.*;
 import java.time.Instant;
 
 
-@Entity(name = "refreshtoken")
+@Entity
+@Table(name= "refresh_token")
 public class RefreshToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
     @Column(nullable = false, unique = true)
@@ -28,7 +29,7 @@ public class RefreshToken {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
