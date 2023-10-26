@@ -8,6 +8,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ import java.util.function.Function;
 public class JwtService {
 
     private static final String SECRET_KEY = "9a206a37903b1b2cfecddb5c348d2dc285fecfe77793b389b65e36f85384bb27";
+    @Value("${myapp.access_token.expiration.seconds}")
+    private int expirationInSeconds;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -43,7 +46,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + expirationInSeconds * 1000L))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -73,4 +76,11 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyByte);
     }
 
+    public int getExpirationInSeconds() {
+        return expirationInSeconds;
+    }
+
+    public void setExpirationInSeconds(int expirationInSeconds) {
+        this.expirationInSeconds = expirationInSeconds;
+    }
 }

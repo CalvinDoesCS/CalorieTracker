@@ -23,12 +23,14 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { Link, useNavigate } from 'react-router-dom'
+import useSignOut from '../hooks/useSignOut'
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure()
+  const signOut = useSignOut();
   const logout = () => {
-    localStorage.clear();
-    }
+    signOut.mutate();
+  }
   return (
     <Box>
       <Flex

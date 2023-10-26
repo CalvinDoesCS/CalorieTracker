@@ -45,8 +45,8 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List <Role> roles;
 
-    @OneToOne(mappedBy = "user")
-    private RefreshToken refreshToken;
+    @OneToMany(mappedBy = "user")
+    private List<RefreshToken> refreshTokens;
     public User() {
     }
 
@@ -153,12 +153,19 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public RefreshToken getRefreshToken() {
-        return refreshToken;
+    public void addRefreshToken(RefreshToken refreshToken){
+        if(refreshTokens == null){
+            refreshTokens = new ArrayList<>();
+            refreshTokens.add(refreshToken);
+        }
     }
 
-    public void setRefreshToken(RefreshToken refreshToken) {
-        this.refreshToken = refreshToken;
+    public List<RefreshToken> getRefreshTokens() {
+        return refreshTokens;
+    }
+
+    public void setRefreshTokens(List<RefreshToken> refreshTokens) {
+        this.refreshTokens = refreshTokens;
     }
 
     @Override

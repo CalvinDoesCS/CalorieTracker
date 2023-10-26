@@ -21,7 +21,7 @@ public class ApplicationConfig {
     }
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> userDAO.findByEmail(username.toLowerCase());
+        return username -> userDAO.findByEmail(username);
     }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
