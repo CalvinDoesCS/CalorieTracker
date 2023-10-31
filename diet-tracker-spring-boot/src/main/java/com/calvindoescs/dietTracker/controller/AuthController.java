@@ -30,8 +30,16 @@ public class    AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
-        return ResponseEntity.ok(authenticationService.register(request));
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request){
+        try {
+            // If the registration is successful, return a success response
+            AuthenticationResponse response = authenticationService.register(request);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            // If an error occurs during registration, return duplicated user error
+            String errorMessage = "Registration failed: " + "Email Already Exist"; // Customize the error message as needed
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+        }
     }
     @PostMapping("/authenticate")
     public ResponseEntity<?> signin (HttpServletResponse response, @RequestBody AuthenticationRequest request){

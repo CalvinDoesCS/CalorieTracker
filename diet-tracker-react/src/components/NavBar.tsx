@@ -141,6 +141,9 @@ export default function NavBar() {
             </Button>
           )}
         </Stack>
+        <Text>
+          {accessToken}
+        </Text>
       </Flex>
 
       <Collapse
@@ -171,9 +174,9 @@ const DesktopNav = () => {
           >
             <PopoverTrigger>
               <Box
-                as="a"
+                as={Link}
                 p={2}
-                href={navItem.href ?? "#"}
+                to={navItem.href ?? "#"}
                 fontSize={"sm"}
                 fontWeight={500}
                 color={linkColor}
@@ -215,8 +218,8 @@ const DesktopNav = () => {
 const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
   return (
     <Box
-      as="a"
-      href={href}
+      as={Link}
+      to={href}
       role={"group"}
       display={"block"}
       p={2}
