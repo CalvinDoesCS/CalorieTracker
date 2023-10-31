@@ -141,9 +141,6 @@ export default function NavBar() {
             </Button>
           )}
         </Stack>
-        <Text>
-          {accessToken}
-        </Text>
       </Flex>
 
       <Collapse
