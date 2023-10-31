@@ -5,11 +5,8 @@ import com.calvindoescs.dietTracker.exception.TokenRefreshException;
 import com.calvindoescs.dietTracker.repository.RefreshTokenRepository;
 import com.calvindoescs.dietTracker.repository.UserRepository;
 import com.calvindoescs.dietTracker.security.JwtService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
@@ -25,8 +22,8 @@ public class RefreshTokenService {
     @Value("${myapp.refresh_token.expiration.seconds}")
     private Long refreshTokenDurationInSeconds;
 
-    private RefreshTokenRepository refreshTokenRepository;
-    private UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
     private final JwtService jwtService;
 
     public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository, JwtService jwtService) {
@@ -49,6 +46,7 @@ public class RefreshTokenService {
         refreshToken = refreshTokenRepository.save(refreshToken);
         return refreshToken;
     }
+
     public RefreshToken createRefreshToken(String email) {
         RefreshToken refreshToken = new RefreshToken();
 
@@ -73,12 +71,13 @@ public class RefreshTokenService {
     public int deleteByUserId(UUID userId) {
         return refreshTokenRepository.deleteByUser(userRepository.findById(userId));
     }
+
     @Transactional
     public int deleteByToken(String token) {
         return refreshTokenRepository.deleteByToken(token);
     }
 
-    public Cookie createRefreshCookie(String email){
+    public Cookie createRefreshCookie(String email) {
 
         //Create the RefreshToken UUID
         RefreshToken refreshToken = createRefreshToken(email);
@@ -95,12 +94,15 @@ public class RefreshTokenService {
         //Return a cookie
         return cookie;
     }
+
     public ResponseCookie generateRefreshCookie(String refreshToken) {
         return generateCookie("refreshToken", refreshToken, "/api/auth");
     }
+
     private ResponseCookie generateCookie(String name, String value, String path) {
         return ResponseCookie.from(name, value).path(path).maxAge(refreshTokenDurationInSeconds).httpOnly(true).secure(true).build();
     }
+
     private String getCookieValueByName(HttpServletRequest request, String name) {
         Cookie cookie = WebUtils.getCookie(request, name);
         if (cookie != null) {
@@ -109,7 +111,8 @@ public class RefreshTokenService {
             return null;
         }
     }
-    public String generateAccessToken(RefreshToken refreshToken){
+
+    public String generateAccessToken(RefreshToken refreshToken) {
         return jwtService.generateToken(refreshToken.getUser());
     }
 

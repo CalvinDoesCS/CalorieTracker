@@ -19,7 +19,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/auth")
-public class    AuthController {
+public class AuthController {
     private final AuthenticationService authenticationService;
     private final RefreshTokenService refreshTokenService;
 
@@ -30,7 +30,7 @@ public class    AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest request){
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
             // If the registration is successful, return a success response
             AuthenticationResponse response = authenticationService.register(request);
@@ -41,15 +41,17 @@ public class    AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
         }
     }
+
     @PostMapping("/authenticate")
-    public ResponseEntity<?> signin (HttpServletResponse response, @RequestBody AuthenticationRequest request){
-            AuthenticationResponse authenticationResponse = authenticationService.authenticate(request);
+    public ResponseEntity<?> signin(HttpServletResponse response, @RequestBody AuthenticationRequest request) {
+        AuthenticationResponse authenticationResponse = authenticationService.authenticate(request);
 
-            response.addCookie(refreshTokenService.createRefreshCookie(request.getEmail()));
+        response.addCookie(refreshTokenService.createRefreshCookie(request.getEmail()));
 
-            return ResponseEntity.ok(authenticationResponse);
+        return ResponseEntity.ok(authenticationResponse);
 
-     }
+    }
+
     @PostMapping("/refreshToken")
     public ResponseEntity<String> refreshToken(HttpServletRequest request, HttpServletResponse response, @CookieValue(name = "refreshToken") String token) {
         try {
@@ -73,11 +75,12 @@ public class    AuthController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request,HttpServletResponse response, @CookieValue(name = "refreshToken") String token){
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response, @CookieValue(name = "refreshToken") String token) {
         System.out.println(token);
         try {
-            int numDeleted =    refreshTokenService.deleteByToken(token);
+            int numDeleted = refreshTokenService.deleteByToken(token);
             //Delele Refrsh Cookie
             Cookie[] cookies = request.getCookies();
 

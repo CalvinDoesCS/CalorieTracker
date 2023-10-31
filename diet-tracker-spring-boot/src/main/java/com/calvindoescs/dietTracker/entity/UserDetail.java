@@ -3,23 +3,23 @@ package com.calvindoescs.dietTracker.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="user_detail")
+@Table(name = "user_detail")
 public class UserDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_detail_id")
+    @Column(name = "user_detail_id")
     private int userDetailId;
-    @Column(name="first_name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name="last_name")
+    @Column(name = "last_name")
     private String lastName;
-    @Column(name="gender")
+    @Column(name = "gender")
     private String gender;
-    @Column(name="phone_number")
+    @Column(name = "phone_number")
     private String phoneNumber;
-    @Column(name="weight")
+    @Column(name = "weight")
     private double weight;
-    @Column(name="activity_level")
+    @Column(name = "activity_level")
     private String activityLevel;
 
     public UserDetail() {
@@ -47,6 +47,7 @@ public class UserDetail {
     public void setUserDetailId(int userDetailId) {
         this.userDetailId = userDetailId;
     }
+
     public String getFirstName() {
         return firstName;
     }

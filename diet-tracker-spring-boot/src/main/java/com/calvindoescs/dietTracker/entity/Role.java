@@ -5,18 +5,19 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
-@Table(name="role")
+@Table(name = "role")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="role_id")
+    @Column(name = "role_id")
     private int roleId;
 
-    @Column(name="role")
+    @Column(name = "role")
     private String role;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy= "roles")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "roles")
     @JsonBackReference
     private List<User> users;
 
@@ -42,8 +43,9 @@ public class Role {
     public void setRole(String role) {
         this.role = role;
     }
-    public void addUser(User user){
-        if(users == null){
+
+    public void addUser(User user) {
+        if (users == null) {
             users = new ArrayList<>();
         }
         users.add(user);

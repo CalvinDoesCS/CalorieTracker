@@ -1,13 +1,12 @@
 package com.calvindoescs.dietTracker.entity;
 
-import com.calvindoescs.dietTracker.entity.User;
 import jakarta.persistence.*;
 
 import java.time.Instant;
 
 
 @Entity
-@Table(name= "refresh_token")
+@Table(name = "refresh_token")
 public class RefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -8,15 +8,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.sql.Timestamp;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -34,19 +34,20 @@ public class User implements UserDetails {
     @Column(name = "registration_date")
     private Timestamp regDate;
 
-    @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    @JoinColumn(name="user_detail_id")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_detail_id")
     private UserDetail userDetail;
 
-    @ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    @JoinTable(name = "user_role" ,joinColumns =
-    @JoinColumn ( name = " user_id" ), inverseJoinColumns =
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", joinColumns =
+    @JoinColumn(name = " user_id"), inverseJoinColumns =
     @JoinColumn(name = "role_id"))
     @JsonManagedReference
-    private List <Role> roles;
+    private List<Role> roles;
 
     @OneToMany(mappedBy = "user")
     private List<RefreshToken> refreshTokens;
+
     public User() {
     }
 
@@ -71,6 +72,7 @@ public class User implements UserDetails {
                 .collect(Collectors.toList());
 
     }
+
     @Override
     @JsonIgnore
     public String getPassword() {
@@ -100,7 +102,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-            return enabled == 1;
+        return enabled == 1;
     }
 
     public void setPassword(String password) {
@@ -138,13 +140,15 @@ public class User implements UserDetails {
     public void setUserDetail(UserDetail userDetail) {
         this.userDetail = userDetail;
     }
-    public void addRole(Role role){
-        if(roles == null){
+
+    public void addRole(Role role) {
+        if (roles == null) {
             roles = new ArrayList<>();
         }
         role.addUser(this);
         roles.add(role);
     }
+
     public List<Role> getRoles() {
         return roles;
     }
@@ -153,8 +157,8 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public void addRefreshToken(RefreshToken refreshToken){
-        if(refreshTokens == null){
+    public void addRefreshToken(RefreshToken refreshToken) {
+        if (refreshTokens == null) {
             refreshTokens = new ArrayList<>();
             refreshTokens.add(refreshToken);
         }

@@ -31,9 +31,6 @@ public class AuthenticationRequest {
 
     @Override
     public String toString() {
-        return "AuthenticationRequest{" +
-                "email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return "AuthenticationRequest{" + "email='" + email + '\'' + ", password='" + password + '\'' + '}';
     }
 }
