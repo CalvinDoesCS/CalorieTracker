@@ -11,17 +11,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.NoSuchElementException;
 
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class    AuthController {
     private final AuthenticationService authenticationService;
     private final RefreshTokenService refreshTokenService;
 
@@ -44,7 +42,7 @@ public class AuthController {
             return ResponseEntity.ok(authenticationResponse);
 
      }
-    @GetMapping("/refreshToken")
+    @PostMapping("/refreshToken")
     public ResponseEntity<String> refreshToken(HttpServletRequest request, HttpServletResponse response, @CookieValue(name = "refreshToken") String token) {
         try {
             //Find the RefreshToken
@@ -69,9 +67,9 @@ public class AuthController {
     }
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request,HttpServletResponse response, @CookieValue(name = "refreshToken") String token){
-
+        System.out.println(token);
         try {
-            int numDeleted = refreshTokenService.deleteByToken(token);
+            int numDeleted =    refreshTokenService.deleteByToken(token);
             //Delele Refrsh Cookie
             Cookie[] cookies = request.getCookies();
 

@@ -10,8 +10,11 @@ const useLoginUser = () =>{
 
   const {setAccessToken} = useTokenStore();
 
+  const axiosConfig = {
+    withCredentials: true // Set the 'withCredentials' option here
+};
   return useMutation({
-    mutationFn: (user : User) => apiClient.post(user)
+    mutationFn: (user : User) => apiClient.post(user,axiosConfig)
     .then( (res) => {
         setAccessToken(res.access_token);
       })

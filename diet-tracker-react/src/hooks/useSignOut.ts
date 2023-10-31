@@ -1,23 +1,29 @@
 import { useMutation } from "@tanstack/react-query";
 import APIClient from "../services/api-cilent";
 import useTokenStore from "./useTokenStore";
+import Token from "../entities/Token";
 
 
-interface Token{
-    accessToken: string | null;
-}
-const apiClient = new APIClient<Token>('/auth/refreshtoken');
 
-const useSignOut = () =>{
+const apiClient = new APIClient<Token>('/auth/logout');
+
+const useReFreshToken = () =>{
   const {accessToken,clearAccessToken} = useTokenStore();
 
+  const headers = { 
+    'Authorization': `Bearer ${accessToken}`,
+  };
+  const axiosConfig = {
+    headers: headers,
+    withCredentials: true // Set the 'withCredentials' option here
+};
+
   return useMutation({
-    mutationFn: () => apiClient.post({accessToken})
+    mutationFn: () => apiClient.post({accessToken},axiosConfig)
     .then( (res) => {
-        //clearAccessToken();
-        console.log(res.data);
+        clearAccessToken();
         return res.data;
       })
     })
 }
-export default useSignOut;
+export default useReFreshToken;

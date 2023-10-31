@@ -99,7 +99,7 @@ public class RefreshTokenService {
         return generateCookie("refreshToken", refreshToken, "/api/auth");
     }
     private ResponseCookie generateCookie(String name, String value, String path) {
-        return ResponseCookie.from(name, value).path(path).maxAge(refreshTokenDurationInSeconds).httpOnly(true).secure(true).build();
+        return ResponseCookie.from(name, value).path(path).maxAge(refreshTokenDurationInSeconds).httpOnly(false).secure(false).build();
     }
     private String getCookieValueByName(HttpServletRequest request, String name) {
         Cookie cookie = WebUtils.getCookie(request, name);
