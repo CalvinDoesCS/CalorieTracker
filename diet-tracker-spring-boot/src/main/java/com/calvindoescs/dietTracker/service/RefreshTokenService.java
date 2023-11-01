@@ -2,9 +2,9 @@ package com.calvindoescs.dietTracker.service;
 
 import com.calvindoescs.dietTracker.entity.RefreshToken;
 import com.calvindoescs.dietTracker.exception.TokenRefreshException;
+import com.calvindoescs.dietTracker.payload.RefreshTokenResponse;
 import com.calvindoescs.dietTracker.repository.RefreshTokenRepository;
 import com.calvindoescs.dietTracker.repository.UserRepository;
-import com.calvindoescs.dietTracker.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -100,7 +100,7 @@ public class RefreshTokenService {
     }
 
     private ResponseCookie generateCookie(String name, String value, String path) {
-        return ResponseCookie.from(name, value).path(path).maxAge(refreshTokenDurationInSeconds).httpOnly(true).secure(true).build();
+        return ResponseCookie.from(name, value).path(path).maxAge(refreshTokenDurationInSeconds).httpOnly(false).secure(false).build();
     }
 
     private String getCookieValueByName(HttpServletRequest request, String name) {
@@ -112,8 +112,10 @@ public class RefreshTokenService {
         }
     }
 
-    public String generateAccessToken(RefreshToken refreshToken) {
-        return jwtService.generateToken(refreshToken.getUser());
+    public RefreshTokenResponse generateAccessToken(RefreshToken refreshToken) {
+        String jwtToken = jwtService.generateToken(refreshToken.getUser());
+        return new RefreshTokenResponse(jwtToken,"Bearer", refreshToken.getUser()
+                .getEmail(), jwtService.getExpirationInSeconds());
     }
 
 }

@@ -12,7 +12,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
    <ChakraProvider theme={theme}>
       <ColorModeScript
         initialColorMode={theme.config.initialColorMode}
@@ -22,6 +21,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <ReactQueryDevtools />
       </QueryClientProvider>
     </ChakraProvider>
-  </React.StrictMode>,
 )
 

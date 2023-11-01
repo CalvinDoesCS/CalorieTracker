@@ -7,7 +7,7 @@ import com.calvindoescs.dietTracker.payload.AuthenticationRequest;
 import com.calvindoescs.dietTracker.payload.AuthenticationResponse;
 import com.calvindoescs.dietTracker.payload.RegisterRequest;
 import com.calvindoescs.dietTracker.repository.UserRepository;
-import com.calvindoescs.dietTracker.security.JwtService;
+import com.calvindoescs.dietTracker.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

@@ -1,4 +1,4 @@
-package com.calvindoescs.dietTracker.security;
+package com.calvindoescs.dietTracker.service;
 
 import com.calvindoescs.dietTracker.entity.UserDetail;
 import io.jsonwebtoken.Claims;

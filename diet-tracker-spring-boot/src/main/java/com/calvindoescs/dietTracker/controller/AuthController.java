@@ -4,6 +4,7 @@ import com.calvindoescs.dietTracker.entity.RefreshToken;
 import com.calvindoescs.dietTracker.exception.TokenRefreshException;
 import com.calvindoescs.dietTracker.payload.AuthenticationRequest;
 import com.calvindoescs.dietTracker.payload.AuthenticationResponse;
+import com.calvindoescs.dietTracker.payload.RefreshTokenResponse;
 import com.calvindoescs.dietTracker.payload.RegisterRequest;
 import com.calvindoescs.dietTracker.service.RefreshTokenService;
 import jakarta.servlet.http.Cookie;
@@ -53,7 +54,7 @@ public class AuthController {
     }
 
     @PostMapping("/refreshToken")
-    public ResponseEntity<String> refreshToken(HttpServletRequest request, HttpServletResponse response, @CookieValue(name = "refreshToken") String token) {
+    public ResponseEntity<?> refreshToken(HttpServletRequest request, HttpServletResponse response, @CookieValue(name = "refreshToken") String token) {
         try {
             //Find the RefreshToken
             RefreshToken refreshToken = refreshTokenService.findByToken(token)
@@ -62,20 +63,23 @@ public class AuthController {
             refreshTokenService.verifyExpiration(refreshToken);
 
             //Create a new pair of access and Refresh token
-            String newAccessToken = refreshTokenService.generateAccessToken(refreshToken);
+            RefreshTokenResponse tokenResponse = refreshTokenService.generateAccessToken(refreshToken);
 
             //delete the old refreshToken and create refresh cookie
             refreshTokenService.deleteByToken(token);
             response.addCookie(refreshTokenService.createRefreshCookie(refreshToken.getUser().getEmail()));
 
-            return ResponseEntity.ok(newAccessToken);
+            return ResponseEntity.ok(tokenResponse);
         } catch (TokenRefreshException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-
+    @PostMapping("/validateAccessToken")
+    public ResponseEntity<String> validateAToken(){
+        return ResponseEntity.ok("Token is valid");
+    }
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response, @CookieValue(name = "refreshToken") String token) {
         System.out.println(token);

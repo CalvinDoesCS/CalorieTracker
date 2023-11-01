@@ -8,17 +8,18 @@ import createAxiosConfig from "../services/axios-config";
 
 const apiClient = new APIClient<Token>('/auth/logout');
 
-const useReFreshToken = () =>{
-  const {accessToken,clearAccessToken} = useTokenStore();
+const useSignOut = () =>{
+  const {accessToken,clearToken} = useTokenStore();
 
   const axiosConfig = createAxiosConfig(accessToken);
 
   return useMutation({
-    mutationFn: () => apiClient.post({accessToken},axiosConfig)
+    mutationFn: () => apiClient.postEmpty(axiosConfig)
     .then( (res) => {
-        clearAccessToken();
-        return res.data;
+        clearToken();
+        console.log(res);
+        return res;
       })
     })
 }
-export default useReFreshToken;
+export default useSignOut;

@@ -1,5 +1,6 @@
 package com.calvindoescs.dietTracker.security;
 
+import com.calvindoescs.dietTracker.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

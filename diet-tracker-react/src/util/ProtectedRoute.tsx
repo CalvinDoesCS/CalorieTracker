@@ -1,27 +1,14 @@
 
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import useTokenStore from "../hooks/useTokenStore";
+import React from "react";
+import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 interface Props {
     children : React.ReactNode
 }
-const ProtectedRoute = ({children} : Props) => {
-    const {accessToken} = useTokenStore();
 
-    const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const checkUserToken = () => {
-        const userToken = accessToken;
-        if (!userToken || userToken === null) {
-            setIsLoggedIn(false);
-            return navigate('/signin');
-        }
-        setIsLoggedIn(true);
-    }
-    useEffect(() => {
-            checkUserToken();
-        }, [isLoggedIn]);
+const ProtectedRoute = ({children} : Props) => {
+    const isLoggedIn = useIsLoggedIn();
+    
     return (
         <>
             {
