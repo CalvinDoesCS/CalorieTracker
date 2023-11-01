@@ -11,7 +11,7 @@ const apiClient = new APIClient<Token>('/auth/logout');
 const useSignOut = () =>{
   const {accessToken,clearToken} = useTokenStore();
 
-  const axiosConfig = createAxiosConfig(accessToken);
+  const axiosConfig = createAxiosConfig(null);
 
   return useMutation({
     mutationFn: () => apiClient.postEmpty(axiosConfig)
@@ -20,6 +20,6 @@ const useSignOut = () =>{
         console.log(res);
         return res;
       })
-    })
+    })  
 }
 export default useSignOut;
