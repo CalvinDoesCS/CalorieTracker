@@ -7,7 +7,7 @@ import useAddUser from '../hooks/useAddUser';
 import {Link, useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-const SignUpForm = () => {
+const RegisterForm = () => {
 
     const schema = z.object({
       email: z
@@ -138,4 +138,4 @@ const SignUpForm = () => {
     )
 }
 
-export default SignUpForm
+export default RegisterForm

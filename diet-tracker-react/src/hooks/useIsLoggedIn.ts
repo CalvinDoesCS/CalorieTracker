@@ -5,7 +5,7 @@ import Token from "../entities/Token";
 import createAxiosConfig from "../services/axios-config";
 import useRefreshToken from "./useRefreshToken";
 import { useNavigate } from "react-router-dom";
-import { AxiosError } from "axios";
+
 
 const apiClient = new APIClient<Token>('/auth/validateAccessToken');
 
@@ -13,7 +13,7 @@ export const useIsLoggedIn = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const refreshToken = useRefreshToken();
-    const {accessToken} = useTokenStore();
+    const {accessToken,clearToken} = useTokenStore();
 
     const refreshAccessToken = async () => {
         try {
@@ -22,6 +22,8 @@ export const useIsLoggedIn = () => {
         } catch (error) {
           // User need to login back in
           console.error("Token refresh failed.", error);
+          //Clear Token client side
+          clearToken();
           setIsLoggedIn(false);
           navigate("/signin")
         }

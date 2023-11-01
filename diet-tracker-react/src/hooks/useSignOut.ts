@@ -9,7 +9,7 @@ import createAxiosConfig from "../services/axios-config";
 const apiClient = new APIClient<Token>('/auth/logout');
 
 const useSignOut = () =>{
-  const {accessToken,clearToken} = useTokenStore();
+  const {clearToken} = useTokenStore();
 
   const axiosConfig = createAxiosConfig(null);
 

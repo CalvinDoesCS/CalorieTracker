@@ -25,10 +25,9 @@ import {
 import { Link} from "react-router-dom";
 import useSignOut from "../hooks/useSignOut";
 import useTokenStore from "../hooks/useTokenStore";
-
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure(); 
-  const { accessToken } = useTokenStore();
+  const {accessToken} = useTokenStore();
 
   const signOut = useSignOut();
   const logout = () => {
@@ -110,7 +109,6 @@ export default function NavBar() {
               </Button>
               <Button
                 as={Link}
-                display={{ base: "none", md: "inline-flex" }}
                 fontSize={"sm"}
                 fontWeight={600}
                 color={"white"}
@@ -126,7 +124,6 @@ export default function NavBar() {
           ) : (
             <Button
               as={Link}
-              display={{ base: "none", md: "inline-flex" }}
               fontSize={"sm"}
               fontWeight={600}
               color={"white"}
@@ -358,6 +355,6 @@ const NAV_ITEMS: Array<NavItem> = [
   },
   {
     label: "Food Database",
-    href: "#",
+    href: "/food-database",
   },
 ];
