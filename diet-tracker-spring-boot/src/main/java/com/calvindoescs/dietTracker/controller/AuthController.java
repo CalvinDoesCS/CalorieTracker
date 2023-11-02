@@ -6,6 +6,7 @@ import com.calvindoescs.dietTracker.payload.AuthenticationRequest;
 import com.calvindoescs.dietTracker.payload.AuthenticationResponse;
 import com.calvindoescs.dietTracker.payload.RefreshTokenResponse;
 import com.calvindoescs.dietTracker.payload.RegisterRequest;
+import com.calvindoescs.dietTracker.service.AuthenticationService;
 import com.calvindoescs.dietTracker.service.RefreshTokenService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

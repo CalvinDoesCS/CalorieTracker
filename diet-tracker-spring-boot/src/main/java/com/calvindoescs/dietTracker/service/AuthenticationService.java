@@ -1,4 +1,4 @@
-package com.calvindoescs.dietTracker.controller;
+package com.calvindoescs.dietTracker.service;
 
 import com.calvindoescs.dietTracker.entity.Role;
 import com.calvindoescs.dietTracker.entity.User;
