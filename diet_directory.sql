@@ -57,7 +57,7 @@ CREATE TABLE food (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     category VARCHAR(50),
-    calories INT,
+    calories DECIMAL(10, 2),
     protein DECIMAL(10, 2),
     carbohydrates DECIMAL(10, 2),
     fat DECIMAL(10, 2),
