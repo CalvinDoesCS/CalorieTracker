@@ -24,7 +24,8 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "9a206a37903b1b2cfecddb5c348d2dc285fecfe77793b389b65e36f85384bb27";
+    @Value("${myapp.security.secret_key}")
+    private String SECRET_KEY = null;
     @Value("${myapp.access_token.expiration.seconds}")
     private int expirationInSeconds;
 
