@@ -48,6 +48,7 @@ public class AuthenticationService {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            return new AuthenticationResponse(null,"",0);
         }
         var user = userRepository.findByEmail(request.getEmail());
 

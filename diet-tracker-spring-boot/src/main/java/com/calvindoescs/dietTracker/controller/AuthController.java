@@ -46,7 +46,9 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<?> signin(HttpServletResponse response, @RequestBody AuthenticationRequest request) {
         AuthenticationResponse authenticationResponse = authenticationService.authenticate(request);
-
+        if(authenticationResponse.getAccessToken() == null){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Bad Credentials");
+        }
         response.addCookie(refreshTokenService.createRefreshCookie(request.getEmail()));
 
         return ResponseEntity.ok(authenticationResponse);

@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Checkbox,
@@ -15,14 +17,33 @@ import { useEffect, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import useLoginUser from "../hooks/useAuth";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 const LoginForm = () => {
+  
+  const schema = z.object({
+    email: z
+      .string(), 
+    password: z
+      .string()
+  });
+
+  type FormData = z.infer<typeof schema>;
+
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm();
+  const [isErrorVisible, setisErrorVisible] = useState(true); 
+
+  const { register, handleSubmit } = useForm<FormData>({resolver : zodResolver(schema)});
 
   const loginUser = useLoginUser();
 
+  const setChangeEvent = () => {
+    // Set the state to false to remove the component
+    setisErrorVisible(false);
+  };
   const onSubmit = (data: FieldValues) => {
+    setisErrorVisible(true);
     loginUser.mutate({
       email: data.email,
       password: data.password,
@@ -32,7 +53,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (loginUser.isSuccess) {
       navigate("/");
-    }
+    } 
   }, [loginUser]);
 
   return (
@@ -62,6 +83,7 @@ const LoginForm = () => {
               <Input
                 {...register("email")}
                 type="email"
+                onChange={setChangeEvent}
               />
             </FormControl>
             <FormControl id="password">
@@ -69,8 +91,10 @@ const LoginForm = () => {
               <Input
                 {...register("password")}
                 type="password"
+                onChange={setChangeEvent}
               />
             </FormControl>
+            {loginUser.isError && isErrorVisible && <Alert status='error' marginY={2}><AlertIcon />Incorrect Email or Password Combination</Alert> }
             <Stack spacing={10}>
               <Stack
                 direction={{ base: "column", sm: "row" }}
