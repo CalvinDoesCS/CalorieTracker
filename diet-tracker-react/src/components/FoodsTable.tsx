@@ -31,10 +31,7 @@ export const FoodsTable = () => {
   if (error) return null;
   return (
     <Box>
-      <Flex justifyContent={"space-between"}>
-        <Heading>Food Details</Heading>
-        <AddItemButton buttonName="+ Add Food Item" onSubmit={onAdd}/>
-      </Flex>
+      <Heading>Food Details</Heading>
       <Center my={2}>
         <Table
           variant="simple"
@@ -78,6 +75,9 @@ export const FoodsTable = () => {
           </Tbody>
         </Table>
       </Center>
+      <Flex justifyContent={"end"} marginY={4}>
+        <AddItemButton buttonName="+ Add Food Item" onSubmit={onAdd}/>
+      </Flex>
     </Box>
   );
 };

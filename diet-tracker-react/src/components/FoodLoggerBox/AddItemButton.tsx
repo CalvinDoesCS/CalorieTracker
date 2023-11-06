@@ -46,8 +46,8 @@ const AddItemButton = ({ buttonName,onSubmit }: Props) => {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
   return (
     <>
-      <Button onClick={onOpen}>
-        <Text fontSize={15}>{buttonName}</Text>
+      <Button onClick={onOpen} colorScheme="cyan" rounded={'20px'}>
+        <Text fontSize={15}>{buttonName}</Text> 
       </Button>
 
       <Modal
