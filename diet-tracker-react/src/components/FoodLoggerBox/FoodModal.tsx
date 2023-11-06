@@ -22,9 +22,11 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (data: Food) => void;
+  buttonSubmitName: string;
+  initialData?: Food;
 }
 
-const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
+const FoodModal = ({ isOpen, onClose, onSubmit, buttonSubmitName, initialData }: Props) => {
   const schema = z.object({
     name: z.string().min(1, "Name is required"),
     category: z.string().min(1, "Category is required"),
@@ -67,6 +69,7 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
               id="food_name"
               placeholder="Food Name"
               type="text"
+              defaultValue={initialData?.name}
             />
             {errors.name && (
               <Alert
@@ -90,6 +93,7 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
               id="food_category"
               placeholder="Category"
               type="string"
+              defaultValue={initialData?.category}
             />
             {errors.category && (
               <Alert
@@ -113,6 +117,7 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
               id="food_calories"
               placeholder="Calories"
               type="number"
+              defaultValue={initialData?.calories}
             />
             {errors.calories && (
               <Alert
@@ -136,6 +141,7 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
               id="food_protein"
               placeholder="Protein"
               type="number"
+              defaultValue={initialData?.protein}
             />
             {errors.protein && (
               <Alert
@@ -159,6 +165,7 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
               id="food_carbs"
               placeholder="Carbs"
               type="number"
+              defaultValue={initialData?.carbohydrate}
             />
             {errors.carbohydrate && (
               <Alert
@@ -182,6 +189,7 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
               id="food_fats"
               placeholder="Fats"
               type="number"
+              defaultValue={initialData?.fat}
             />
             {errors.fat && (
               <Alert
@@ -199,13 +207,13 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
           {}
           <Button
             onClick={handleSubmit((data : FormData) => {
-              onSubmit({ ...data, id: 0 });
+              onSubmit({ ...data, id: initialData?.id || 0});
               onClose();
             })}
             colorScheme="blue"
             mr={3}
           >
-            Add Item
+            {buttonSubmitName}
           </Button>
           <Button onClick={onClose}>Cancel</Button>
         </ModalFooter>
@@ -214,4 +222,4 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
   );
 };
 
-export default FoodModalButton;
+export default FoodModal;

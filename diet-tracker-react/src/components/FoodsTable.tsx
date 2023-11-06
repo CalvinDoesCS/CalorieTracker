@@ -12,17 +12,23 @@ import {
   Thead,
   Tr,Text, useDisclosure
 } from "@chakra-ui/react";
-import { useFoods, useDeleteFoods, useAddFoods } from "../hooks/FoodHooks";
-import AddItemButton from "./FoodLoggerBox/FoodModal";
-import { FieldValues } from "react-hook-form";
+import { useFoods, useDeleteFoods, useAddFoods, useEditFoods } from "../hooks/FoodHooks";
 import Food from "../entities/Food";
+import FoodModal from "./FoodLoggerBox/FoodModal";
+import { useState } from "react";
 
 export const FoodsTable = () => {
 
   const { data, error } = useFoods();
   const deleteFoods = useDeleteFoods();
   const addFoods = useAddFoods();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const editFoods = useEditFoods();
+
+
+  const [selectedFoodForEdit, setSelectedFoodForEdit] = useState<Food>();
+
+  const { isOpen : isOpenAdd, onOpen : onOpenAdd, onClose : onCloseAdd } = useDisclosure();
+  const { isOpen : isOpenEdit, onOpen : onOpenEdit, onClose : onCloseEdit } = useDisclosure();
   
   const onDelete = (id: number) => {
     deleteFoods.mutate(id);
@@ -30,6 +36,10 @@ export const FoodsTable = () => {
   const onAdd = (data: Food) => {
     console.log(data);
     addFoods.mutate(data);
+  }
+  const onEdit = (data : Food) => {
+    console.log(data);
+    editFoods.mutate(data);
   }
   if (error) return null;
 
@@ -65,7 +75,12 @@ export const FoodsTable = () => {
                     variant="outline"
                     spacing="6"
                   >
-                    <Button colorScheme="cyan">Edit</Button>
+                    <Button 
+                    onClick={() => {setSelectedFoodForEdit(food);onOpenEdit();}}
+                    colorScheme="cyan">
+                      Edit
+                    </Button>
+
                     <Button
                       onClick={() => onDelete(food.id)}
                       colorScheme="red"
@@ -80,11 +95,12 @@ export const FoodsTable = () => {
         </Table>
       </Center>
       <Flex justifyContent={"end"} marginY={4}>
-        <Button onClick={onOpen} colorScheme="cyan" rounded={'20px'}>
+        <Button onClick={onOpenAdd} colorScheme="cyan" rounded={'20px'}>
           <Text fontSize={15}> + Add Item</Text> 
         </Button>
-        <AddItemButton onClose={onClose} isOpen={isOpen} onSubmit={onAdd}/>
       </Flex>
+      <FoodModal isOpen={isOpenAdd} onClose={onCloseAdd} onSubmit={onAdd} buttonSubmitName="Create new Food"/>
+      <FoodModal isOpen={isOpenEdit} onClose={onCloseEdit} onSubmit={onEdit} buttonSubmitName="Update Food Item" initialData={selectedFoodForEdit}   ></FoodModal>
     </Box>
   );
 };

@@ -46,6 +46,18 @@ public class FoodController {
             return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>("Food Created", HttpStatus.CREATED);
+    }
+    @PutMapping("/foods/{id}")
+    public ResponseEntity<Food> updateFood(
+            @PathVariable(name="id") int foodId,
+            @RequestBody FoodRequest foodRequest
+    ) {
+        Food updateFood = new Food(foodRequest.getName(),foodRequest.getCategory(),foodRequest.getCalories(),foodRequest.getProtein(),foodRequest.getCarbohydrate(),foodRequest.getFat());
+        // Set the ID of the updatedFood to match the path variable
+        updateFood.setId(foodId);
 
+        // Update the food item
+        Food updatedFoodItem = foodService.updateFood(updateFood);
+        return ResponseEntity.ok(updatedFoodItem);
     }
 }
