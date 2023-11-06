@@ -27,6 +27,12 @@ class APIClient<T> {
       .post(this.endpoint,object,config)
       .then(res=>res.data)
   }
+  delete = (name: string, config?: AxiosRequestConfig) => {
+    
+    return axiosInstance
+      .delete(this.endpoint + "/" + name, config)
+      .then(res=>res.data)
+  }
 }
 
 export default APIClient

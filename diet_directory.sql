@@ -55,11 +55,11 @@ CREATE TABLE refresh_token (
 );
 CREATE TABLE food (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL UNIQUE,
     category VARCHAR(50),
     calories DECIMAL(10, 2),
     protein DECIMAL(10, 2),
-    carbohydrates DECIMAL(10, 2),
+    carbohydrate DECIMAL(10, 2),
     fat DECIMAL(10, 2),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -72,4 +72,17 @@ CREATE TABLE food_log (
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (food_id) REFERENCES food(id)
 );
+
+-- Inserting sample data into the 'food' table
+INSERT INTO food (name, category, calories, protein, carbohydrate, fat)
+VALUES ('Chicken Breast', 'Meat', 165.5, 31.0, 0.6, 3.6);
+
+INSERT INTO food (name, category, calories, protein, carbohydrate, fat)
+VALUES ('Salmon', 'Fish', 206.0, 22.0, 0.0, 13.5);
+
+INSERT INTO food (name, category, calories, protein, carbohydrate, fat)
+VALUES ('Broccoli', 'Vegetable', 55.0, 2.8, 11.2, 0.6);
+
+INSERT INTO food (name, category, calories, protein, carbohydrate, fat)
+VALUES ('Brown Rice', 'Grain', 111.0, 2.1, 23.0, 0.9);
 

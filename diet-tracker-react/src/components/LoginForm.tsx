@@ -42,7 +42,7 @@ const LoginForm = () => {
     // Set the state to false to remove the component
     setisErrorVisible(false);
   };
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = (data : FormData) => {
     setisErrorVisible(true);
     loginUser.mutate({
       email: data.email,

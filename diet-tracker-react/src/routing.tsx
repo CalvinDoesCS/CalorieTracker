@@ -5,7 +5,7 @@ import Layout from "./pages/Layout";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import ProtectedRoute from "./util/ProtectedRoute";
-import FoodDatabase from "./components/FoodDataBase";
+import { FoodsTable } from "./components/FoodsTable";
 
 const router = createBrowserRouter([  
     {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
         },
         {
           path: "/food-database",
-          element: <FoodDatabase></FoodDatabase>
+          element: <FoodsTable></FoodsTable>
         },
         {
           path: "/signup",

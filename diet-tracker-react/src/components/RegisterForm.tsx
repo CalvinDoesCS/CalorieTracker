@@ -27,11 +27,11 @@ const RegisterForm = () => {
     type FormData = z.infer<typeof schema>;
 
     const navigate = useNavigate();
-    const {register, handleSubmit,formState: {errors}} = useForm<FormData>({resolver : zodResolver(schema)});
+    const {register, handleSubmit, formState: {errors}} = useForm<FormData>({resolver : zodResolver(schema)});
 
     const addUser = useAddUser();
     
-    const onSubmit = (data: FieldValues) => {
+    const onSubmit = (data: FormData) => {
         addUser.mutate({
           email: data.email,
           password: data.password

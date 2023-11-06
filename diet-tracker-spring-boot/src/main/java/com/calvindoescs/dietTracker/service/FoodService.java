@@ -3,6 +3,7 @@ package com.calvindoescs.dietTracker.service;
 import com.calvindoescs.dietTracker.entity.Food;
 import com.calvindoescs.dietTracker.repository.FoodRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -32,5 +33,10 @@ public class FoodService {
 
     public void deleteFood(int id) {
         foodRepository.deleteById(id);
+    }
+
+    @Transactional
+    public int deleteFoodByName(String name){
+        return foodRepository.deleteByName(name);
     }
 }

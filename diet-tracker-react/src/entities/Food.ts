@@ -3,6 +3,6 @@ export default interface Food {
     category: string;
     calories: number;
     protein: number;
-    carbs: number;
-    fats: number;
+    carbohydrate: number;
+    fat: number;
   }
