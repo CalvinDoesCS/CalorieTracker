@@ -23,20 +23,19 @@ public class FoodController {
     public ResponseEntity<List<Food>> getAllFoods() {
         // Logic to fetch a list of foods, e.g., from a database
         List<Food> foods = foodService.getAllFoods();
-
         // Return the list of foods in the response with a 200 OK status
         return new ResponseEntity<>(foods, HttpStatus.OK);
     }
-    @DeleteMapping("/foods/{name}")
-    public ResponseEntity<String> deleteFoodByName(@PathVariable String name) {
-        int deletedId = -1;
+
+    @DeleteMapping("/foods/{id}")
+    public ResponseEntity<String> deleteFoodById(@PathVariable(name="id") int id) {
         // Delete the food item by name
         try{
-            deletedId = foodService.deleteFoodByName(name);
+            foodService.deleteFood(id);
         }catch(Exception e){
             return new ResponseEntity<>("Name doesn't exist",HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Id Deleted: " + deletedId, HttpStatus.OK);
+        return new ResponseEntity<>("Id Deleted: " + id, HttpStatus.OK);
     }
     @PostMapping("/foods")
     public ResponseEntity<String> addFood(@RequestBody FoodRequest foodRequest){

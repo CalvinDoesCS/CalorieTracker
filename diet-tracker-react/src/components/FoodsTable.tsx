@@ -24,8 +24,8 @@ export const FoodsTable = () => {
   const addFoods = useAddFoods();
   const { isOpen, onOpen, onClose } = useDisclosure();
   
-  const onDelete = (name: string) => {
-    deleteFoods.mutate(name);
+  const onDelete = (id: number) => {
+    deleteFoods.mutate(id);
   };
   const onAdd = (data: Food) => {
     console.log(data);
@@ -52,8 +52,8 @@ export const FoodsTable = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data?.map((food, index) => (
-              <Tr key={index}>
+            {data?.map((food) => (
+              <Tr key={food.id}>
                 <Td>{food.name}</Td>
                 <Td>{food.category}</Td>
                 <Td>{food.calories}</Td>
@@ -67,7 +67,7 @@ export const FoodsTable = () => {
                   >
                     <Button colorScheme="cyan">Edit</Button>
                     <Button
-                      onClick={() => onDelete(food.name)}
+                      onClick={() => onDelete(food.id)}
                       colorScheme="red"
                     >
                       Delete

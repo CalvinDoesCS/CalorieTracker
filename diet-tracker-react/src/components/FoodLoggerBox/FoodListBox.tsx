@@ -16,14 +16,14 @@ const FoodListBox = ({listName} : Props) => {
         <Heading bgColor={useColorModeValue('gray.200', 'gray.900')} padding={2}>{listName}</Heading>
         <FoodList foodList={foodList} />
         <Flex padding={3} justifyContent={'space-between'}>
-          <AddItemButton listName={listName} addFoodItem={
+          {/* <AddItemButton listName={listName} addFoodItem={
             (food: Food) => 
               {
                 setFoodList([...foodList, food])
                 setTotalCalorie(Number(food.calories) + Number(totalCalorie))
               }
           } 
-          />
+          /> */}
           <Center>Total Calories: {totalCalorie}</Center>  
         </Flex>
         

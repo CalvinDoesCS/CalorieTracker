@@ -13,7 +13,6 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
-
     @Column(name="name")
     @NonNull
     private String name;

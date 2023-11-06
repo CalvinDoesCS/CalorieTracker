@@ -27,10 +27,10 @@ class APIClient<T> {
       .post(this.endpoint,object,config)
       .then(res=>res.data)
   }
-  delete = (name: string, config?: AxiosRequestConfig) => {
+  delete = (id: string | number, config?: AxiosRequestConfig) => {
     
     return axiosInstance
-      .delete(this.endpoint + "/" + name, config)
+      .delete(this.endpoint + "/" + id, config)
       .then(res=>res.data)
   }
 }

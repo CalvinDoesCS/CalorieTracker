@@ -198,8 +198,8 @@ const FoodModalButton = ({ isOpen, onClose, onSubmit }: Props) => {
         <ModalFooter>
           {}
           <Button
-            onClick={handleSubmit((data: Food) => {
-              onSubmit(data);
+            onClick={handleSubmit((data : FormData) => {
+              onSubmit({ ...data, id: 0 });
               onClose();
             })}
             colorScheme="blue"

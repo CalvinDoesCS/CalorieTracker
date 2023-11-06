@@ -19,8 +19,8 @@ export const useDeleteFoods = () => {
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
         mutationKey: ['foods'],
-        mutationFn: (foodName : string) => apiClient.delete(foodName,axiosConfig),
-        onMutate: async (foodName) => {
+        mutationFn: (foodId : number) => apiClient.delete(foodId,axiosConfig),
+        onMutate: async (foodId) => {
             
             await queryClient.cancelQueries({ queryKey: ['foods'] })
 
@@ -30,7 +30,7 @@ export const useDeleteFoods = () => {
               // Optimistically update the 'todos' data
             queryClient.setQueryData(['foods'], (previousFood?: Food[]) => {
                 // Ensure you return the filtered data
-                return previousFood?.filter((food) => food.name !== foodName);
+                return previousFood?.filter((food) => food.id !== foodId);
             });
             
             // Return a context object with the snapshotted value
