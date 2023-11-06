@@ -1,7 +1,7 @@
 import { Box, Center, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
 import { useState } from 'react';
 import Food from '../../entities/Food';
-import AddItemButton from './AddItemButton';
+import AddItemButton from './FoodModal';
 import FoodList from './FoodList';
 
 interface Props{

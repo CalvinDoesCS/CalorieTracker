@@ -10,17 +10,20 @@ import {
   Td,
   Th,
   Thead,
-  Tr
+  Tr,Text, useDisclosure
 } from "@chakra-ui/react";
 import { useFoods, useDeleteFoods, useAddFoods } from "../hooks/FoodHooks";
-import AddItemButton from "./FoodLoggerBox/AddItemButton";
+import AddItemButton from "./FoodLoggerBox/FoodModal";
 import { FieldValues } from "react-hook-form";
 import Food from "../entities/Food";
 
 export const FoodsTable = () => {
+
   const { data, error } = useFoods();
   const deleteFoods = useDeleteFoods();
   const addFoods = useAddFoods();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  
   const onDelete = (name: string) => {
     deleteFoods.mutate(name);
   };
@@ -29,6 +32,7 @@ export const FoodsTable = () => {
     addFoods.mutate(data);
   }
   if (error) return null;
+
   return (
     <Box>
       <Heading>Food Details</Heading>
@@ -76,7 +80,10 @@ export const FoodsTable = () => {
         </Table>
       </Center>
       <Flex justifyContent={"end"} marginY={4}>
-        <AddItemButton buttonName="+ Add Food Item" onSubmit={onAdd}/>
+        <Button onClick={onOpen} colorScheme="cyan" rounded={'20px'}>
+          <Text fontSize={15}> + Add Item</Text> 
+        </Button>
+        <AddItemButton onClose={onClose} isOpen={isOpen} onSubmit={onAdd}/>
       </Flex>
     </Box>
   );
