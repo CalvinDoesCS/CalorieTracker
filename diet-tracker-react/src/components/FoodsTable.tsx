@@ -8,21 +8,26 @@ import {
   Table,
   Tbody,
   Td,
+  Text,
   Th,
   Thead,
-  Tr,Text, useDisclosure
+  Tr,
+  useDisclosure
 } from "@chakra-ui/react";
-import { useFoods, useDeleteFoods, useAddFoods, useEditFoods } from "../hooks/FoodHooks";
-import Food from "../entities/Food";
-import FoodModal from "./FoodLoggerBox/FoodModal";
 import { useState } from "react";
+import Food from "../entities/Food";
+import { useAddFoods, useDeleteFoods, useEditFoods, useFoods } from "../hooks/FoodHooks";
+import FoodInput from "./FoodInput";
+import ModalLayout from "./ModalLayout";
 
 export const FoodsTable = () => {
 
-  const { data, error } = useFoods();
+  const { data, error, isLoading } = useFoods();
   const deleteFoods = useDeleteFoods();
+
   const addFoods = useAddFoods();
   const editFoods = useEditFoods();
+
 
 
   const [selectedFoodForEdit, setSelectedFoodForEdit] = useState<Food>();
@@ -99,8 +104,12 @@ export const FoodsTable = () => {
           <Text fontSize={15}> + Add Item</Text> 
         </Button>
       </Flex>
-      <FoodModal isOpen={isOpenAdd} onClose={onCloseAdd} onSubmit={onAdd} buttonSubmitName="Create new Food"/>
-      <FoodModal isOpen={isOpenEdit} onClose={onCloseEdit} onSubmit={onEdit} buttonSubmitName="Update Food Item" initialData={selectedFoodForEdit}   ></FoodModal>
+      <ModalLayout isOpen={isOpenAdd} onClose={onCloseAdd} buttonName="Create new Food" headerName="Food Item" formId={"foodInputAdd"}> 
+        <FoodInput onSubmit={onAdd} onClose={onCloseAdd} formId={"foodInputAdd"}/>
+      </ModalLayout>
+      <ModalLayout isOpen={isOpenEdit} onClose={onCloseEdit} buttonName="Update Food Item" headerName="Food Item" formId={"foodInputEdit"}>
+        <FoodInput onSubmit={onEdit} onClose={onCloseEdit} initialData={selectedFoodForEdit} formId={"foodInputEdit"}/>
+      </ModalLayout>
     </Box>
   );
 };

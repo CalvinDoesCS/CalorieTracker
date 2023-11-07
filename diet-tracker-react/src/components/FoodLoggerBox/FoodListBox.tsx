@@ -1,8 +1,9 @@
-import { Box, Center, Flex, Heading, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Heading, useColorModeValue, useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
 import Food from '../../entities/Food';
-import AddItemButton from './FoodModal';
+import ModalLayout from '../ModalLayout';
 import FoodList from './FoodList';
+import FoodInput from '../FoodInput';
 
 interface Props{
   listName: string;
@@ -11,22 +12,18 @@ interface Props{
 const FoodListBox = ({listName} : Props) => {
   const [foodList, setFoodList] = useState<Food[]>([]);
   const [totalCalorie, setTotalCalorie] = useState(0);
+  const {isOpen, onOpen, onClose} = useDisclosure();
   return (
     <Box>
         <Heading bgColor={useColorModeValue('gray.200', 'gray.900')} padding={2}>{listName}</Heading>
         <FoodList foodList={foodList} />
         <Flex padding={3} justifyContent={'space-between'}>
-          {/* <AddItemButton listName={listName} addFoodItem={
-            (food: Food) => 
-              {
-                setFoodList([...foodList, food])
-                setTotalCalorie(Number(food.calories) + Number(totalCalorie))
-              }
-          } 
-          /> */}
+          <Button onClick={onOpen}> + Add {listName} Item</Button>
           <Center>Total Calories: {totalCalorie}</Center>  
         </Flex>
-        
+        <ModalLayout isOpen={isOpen} onClose={onClose} buttonName={'Submit'} headerName={'Food List'} formId={''}>
+          
+        </ModalLayout>
     </Box>
  
   )
