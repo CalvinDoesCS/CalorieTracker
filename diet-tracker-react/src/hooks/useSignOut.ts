@@ -17,7 +17,6 @@ const useSignOut = () =>{
     mutationFn: () => apiClient.postEmpty(axiosConfig)
     .then( (res) => {
         clearToken();
-        console.log(res);
         return res;
       })
     })  

@@ -8,7 +8,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
-import Food from "../entities/Food";
+import Food from "../../entities/Food";
 
 interface Props {
   onSubmit: (data: any) => void;
@@ -17,7 +17,7 @@ interface Props {
   initialData?: Food;
 }
 
-const FoodInput = ({ initialData, onSubmit,formId, onClose }: Props) => {
+const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) => {
   const schema = z.object({
     name: z.string().min(1, "Name is required"),
     category: z.string().min(1, "Category is required"),
@@ -198,4 +198,4 @@ const FoodInput = ({ initialData, onSubmit,formId, onClose }: Props) => {
   );
 };
 
-export default FoodInput;
+export default FoodCreateEditInput;

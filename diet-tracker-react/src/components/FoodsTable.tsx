@@ -17,8 +17,8 @@ import {
 import { useState } from "react";
 import Food from "../entities/Food";
 import { useAddFoods, useDeleteFoods, useEditFoods, useFoods } from "../hooks/FoodHooks";
-import FoodInput from "./FoodInput";
-import ModalLayout from "./ModalLayout";
+import FoodInput from "./FoodModal/FoodCreateEditInput";
+import ModalLayout from "./FoodModal/ModalLayout";
 
 export const FoodsTable = () => {
 

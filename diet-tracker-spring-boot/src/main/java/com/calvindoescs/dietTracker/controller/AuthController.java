@@ -64,7 +64,6 @@ public class AuthController {
                     .orElseThrow(() -> new NoSuchElementException("Cookie not found"));
             //Verify the RefreshToken is not expired
             refreshTokenService.verifyExpiration(refreshToken);
-
             //Create a new pair of access and Refresh token
             RefreshTokenResponse tokenResponse = refreshTokenService.generateAccessToken(refreshToken);
 

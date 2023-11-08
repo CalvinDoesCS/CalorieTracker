@@ -16,7 +16,6 @@ const useLoginUser = () =>{
   return useMutation({
     mutationFn: (user : User) => apiClient.post(user,axiosConfig)
     .then( (res) => {
-        console.log(res);
         setToken(res.access_token, res.expires_in, res.email, res.token_type);
       })
     })
