@@ -3,10 +3,11 @@ package com.calvindoescs.dietTracker.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @Table(name="food")
 public class Food {
     @Id
@@ -14,22 +15,35 @@ public class Food {
     @Column(name="id")
     private int id;
     @Column(name="name")
-    @NonNull
     private String name;
     @Column(name="category")
-    @NonNull
     private String category;
     @Column(name="calories")
-    @NonNull
     private double calories;
     @Column(name="protein")
-    @NonNull
     private double protein;
     @Column(name="carbohydrate")
-    @NonNull
     private double carbohydrate ;
     @Column(name="fat")
-    @NonNull
     private double fat;
 
+    @OneToMany(mappedBy="food")
+    private List<FoodLog> foodLogs;
+
+    public Food(String name, String category, double calories, double protein, double carbohydrate, double fat) {
+        this.name = name;
+        this.category = category;
+        this.calories = calories;
+        this.protein = protein;
+        this.carbohydrate = carbohydrate;
+        this.fat = fat;
+    }
+
+    public void addFoodLog(FoodLog foodLog){
+        if (foodLogs == null) {
+            foodLogs = new ArrayList<>();
+        }
+        foodLog.setFood(this);
+        foodLogs.add(foodLog);
+    }
 }

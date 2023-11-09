@@ -30,7 +30,7 @@ const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) =
     carbohydrate: z
       .number({ invalid_type_error: "Not a Number" })
       .nonnegative("Cannot be negative"),
-    fat: z
+    fat:  z     
       .number({ invalid_type_error: "Not a Number" })
       .nonnegative("Cannot be negative"),
   });
@@ -85,7 +85,7 @@ const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) =
           {...register("category")}
           id="food_category"
           placeholder="Category"
-          type="string"
+          type="text"
           defaultValue={initialData?.category}
         />
         {errors.category && (
@@ -109,7 +109,7 @@ const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) =
           {...register("calories", { valueAsNumber: true })}
           id="food_calories"
           placeholder="Calories"
-          type="number"
+          type="text"
           defaultValue={initialData?.calories}
         />
         {errors.calories && (
@@ -133,7 +133,7 @@ const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) =
           {...register("protein", { valueAsNumber: true })}
           id="food_protein"
           placeholder="Protein"
-          type="number"
+          type="text"
           defaultValue={initialData?.protein}
         />
         {errors.protein && (
@@ -157,7 +157,7 @@ const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) =
           {...register("carbohydrate", { valueAsNumber: true })}
           id="food_carbs"
           placeholder="Carbs"
-          type="number"
+          type="text"
           defaultValue={initialData?.carbohydrate}
         />
         {errors.carbohydrate && (
@@ -173,15 +173,15 @@ const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) =
       <FormControl>
         <FormLabel
           mt={4}
-          htmlFor="food_fats"
+          htmlFor="food_fat"
         >
           Fats
         </FormLabel>
         <Input
           {...register("fat", { valueAsNumber: true })}
-          id="food_fats"
-          placeholder="Fats"
-          type="number"
+          id="food_fat"
+          placeholder="Carbs"
+          type="text"
           defaultValue={initialData?.fat}
         />
         {errors.fat && (

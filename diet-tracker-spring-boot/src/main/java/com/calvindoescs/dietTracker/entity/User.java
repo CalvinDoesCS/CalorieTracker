@@ -39,11 +39,14 @@ public class User implements UserDetails {
     private UserDetail userDetail;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role", joinColumns =
-    @JoinColumn(name = " user_id"), inverseJoinColumns =
-    @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_role",
+                joinColumns = @JoinColumn(name = "user_id"),
+                inverseJoinColumns = @JoinColumn(name = "role_id"))
     @JsonManagedReference
     private List<Role> roles;
+
+    @OneToMany(mappedBy="user")
+    private List<FoodLog> foodLogs;
 
     @OneToMany(mappedBy = "user")
     private List<RefreshToken> refreshTokens;
@@ -170,6 +173,21 @@ public class User implements UserDetails {
 
     public void setRefreshTokens(List<RefreshToken> refreshTokens) {
         this.refreshTokens = refreshTokens;
+    }
+
+    public List<FoodLog> getFoodLogs() {
+        return foodLogs;
+    }
+
+    public void setFoodLogs(List<FoodLog> foodLogs) {
+        this.foodLogs = foodLogs;
+    }
+    public void addFoodLog(FoodLog foodLog){
+        if (foodLogs == null) {
+            foodLogs = new ArrayList<>();
+        }
+        foodLog.setUser(this);
+        foodLogs.add(foodLog);
     }
 
     @Override

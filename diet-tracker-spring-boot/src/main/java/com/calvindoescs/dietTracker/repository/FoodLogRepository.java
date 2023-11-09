@@ -1,6 +1,7 @@
 package com.calvindoescs.dietTracker.repository;
 
+import com.calvindoescs.dietTracker.entity.FoodLog;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FoodLog extends JpaRepository<FoodLog, Integer> {
+public interface FoodLogRepository extends JpaRepository<FoodLog, Integer> {
 }

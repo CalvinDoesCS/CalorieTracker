@@ -25,8 +25,6 @@ public class UserSecurityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/api/auth/register", "/api/auth/authenticate","/api/auth/refreshToken", "/api/auth/logout").permitAll()
-                        .requestMatchers("/api/foods").permitAll()
-                        .requestMatchers("/api/foods/*").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

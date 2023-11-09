@@ -13,7 +13,7 @@ import java.util.List;
 @RequestMapping(value="/api", produces = { "application/json" })
 public class FoodController {
 
-    FoodService foodService;
+    private FoodService foodService;
 
     public FoodController(FoodService foodService) {
         this.foodService = foodService;
@@ -52,7 +52,7 @@ public class FoodController {
             @PathVariable(name="id") int foodId,
             @RequestBody FoodRequest foodRequest
     ) {
-        Food updateFood = new Food(foodRequest.getName(),foodRequest.getCategory(),foodRequest.getCalories(),foodRequest.getProtein(),foodRequest.getCarbohydrate(),foodRequest.getFat());
+        Food updateFood = new Food(foodRequest.getName(), foodRequest.getCategory(), foodRequest.getCalories(), foodRequest.getProtein(), foodRequest.getCarbohydrate(), foodRequest.getFat());
         // Set the ID of the updatedFood to match the path variable
         updateFood.setId(foodId);
 
