@@ -4,7 +4,6 @@ import com.calvindoescs.dietTracker.entity.MealType;
 import com.calvindoescs.dietTracker.entity.User;
 import com.calvindoescs.dietTracker.payload.FoodLogRequest;
 import com.calvindoescs.dietTracker.service.FoodLogService;
-import com.calvindoescs.dietTracker.service.FoodService;
 import com.calvindoescs.dietTracker.service.JwtService;
 import com.calvindoescs.dietTracker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

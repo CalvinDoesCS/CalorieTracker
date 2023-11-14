@@ -1,20 +1,20 @@
 package com.calvindoescs.dietTracker.entity;
 
 
+import lombok.Getter;
+
+@Getter
 public enum MealType {
     BREAKFAST("Breakfast"),
     LUNCH("Lunch"),
     DINNER("Dinner");
 
-    private String displayName;
+    private final String displayName;
 
-    private MealType(String displayName) {
+    MealType(String displayName) {
         this.displayName = displayName;
     }
 
-    public String getDisplayName() {
-        return displayName;
-    }
     public static MealType fromString(String value) {
         for (MealType mealType : MealType.values()) {
             if (mealType.displayName.equalsIgnoreCase(value)) {
