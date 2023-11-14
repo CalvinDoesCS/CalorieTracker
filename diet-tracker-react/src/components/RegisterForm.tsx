@@ -1,12 +1,12 @@
 
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { Alert, AlertIcon, Box, Button, Center, Flex, FormControl, FormLabel, HStack, Heading, Input, InputGroup, InputRightElement, Link as CharkaLink, Spinner, Stack, Text, useColorModeValue } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { FieldValues, useForm } from 'react-hook-form';
-import useAddUser from '../hooks/useAddUser';
-import {Link, useNavigate } from 'react-router-dom';
-import { z } from 'zod';
+import { Alert, AlertIcon, Box, Button, Center, Link as CharkaLink, Flex, FormControl, FormLabel, Heading, Input, InputGroup, InputRightElement, Spinner, Stack, Text, useColorModeValue } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+import useAddUser from '../hooks/useAddUser';
 const RegisterForm = () => {
 
     const schema = z.object({
