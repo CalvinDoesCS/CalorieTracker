@@ -44,6 +44,7 @@ const FoodListBox = ({listName} : Props) => {
           <FoodDropDown onSubmit={(food: Food) => {
             setFoodList([...foodList, food])
             setTotalCalorie(totalCalorie + food.calories)
+            console.log(getFormattedDate());
             const foodlog: FoodLog = {
               id: 0,
               foodId: food.id,

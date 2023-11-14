@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+
 @RestController
 @RequestMapping(value="/api", produces = { "application/json" })
 public class FoodLogController {
@@ -33,7 +35,8 @@ public class FoodLogController {
         try{
             String email = jwtService.extractUsername(jwtToken);
             User user = userService.findUserByEmail(email);
-            foodLogService.createFoodLog(user.getUserId(),foodLogRequest.getFoodId(), foodLogRequest.getLogDate(),  MealType.fromString(foodLogRequest.getMealType()));
+            System.out.println(foodLogRequest.getLogDate());
+            foodLogService.createFoodLog(user.getUserId(),foodLogRequest.getFoodId(), Date.valueOf(foodLogRequest.getLogDate()),  MealType.fromString(foodLogRequest.getMealType()));
         }catch(Exception e){
             return new ResponseEntity<>("Token is invalid or cannot find user", HttpStatus.NOT_FOUND);
         }
