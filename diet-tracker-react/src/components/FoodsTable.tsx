@@ -17,7 +17,7 @@ import {
 import { useState } from "react";
 import Food from "../entities/Food";
 import { useAddFoods, useDeleteFoods, useEditFoods, useFoods } from "../hooks/FoodHooks";
-import FoodInput from "./FoodModal/FoodCreateEditInput";
+import FoodCreateEditInput from "./FoodModal/FoodCreateEditInput";
 import ModalLayout from "./FoodModal/ModalLayout";
 
 export const FoodsTable = () => {
@@ -105,10 +105,10 @@ export const FoodsTable = () => {
         </Button>
       </Flex>
       <ModalLayout isOpen={isOpenAdd} onClose={onCloseAdd} buttonName="Create new Food" headerName="Food Item" formId={"foodInputAdd"}> 
-        <FoodInput onSubmit={onAdd} onClose={onCloseAdd} formId={"foodInputAdd"}/>
+        <FoodCreateEditInput onSubmit={onAdd} onClose={onCloseAdd} formId={"foodInputAdd"}/>
       </ModalLayout>
       <ModalLayout isOpen={isOpenEdit} onClose={onCloseEdit} buttonName="Update Food Item" headerName="Food Item" formId={"foodInputEdit"}>
-        <FoodInput onSubmit={onEdit} onClose={onCloseEdit} initialData={selectedFoodForEdit} formId={"foodInputEdit"}/>
+        <FoodCreateEditInput onSubmit={onEdit} onClose={onCloseEdit} initialData={selectedFoodForEdit} formId={"foodInputEdit"}/>
       </ModalLayout>
     </Box>
   );

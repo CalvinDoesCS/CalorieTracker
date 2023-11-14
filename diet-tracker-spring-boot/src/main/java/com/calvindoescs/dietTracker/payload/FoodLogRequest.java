@@ -8,12 +8,12 @@ import java.sql.Date;
 public class FoodLogRequest {
     int foodId;
     private Date logDate;
-    private MealType mealType;
+    private String mealType;
 
     public FoodLogRequest() {
     }
 
-    public FoodLogRequest(int foodId, Date logDate, MealType mealType) {
+    public FoodLogRequest(int foodId, Date logDate, String mealType) {
         this.foodId = foodId;
         this.logDate = logDate;
         this.mealType = mealType;
@@ -35,11 +35,11 @@ public class FoodLogRequest {
         this.logDate = logDate;
     }
 
-    public MealType getMealType() {
+    public String getMealType() {
         return mealType;
     }
 
-    public void setMealType(MealType mealType) {
+    public void setMealType(String mealType) {
         this.mealType = mealType;
     }
 }

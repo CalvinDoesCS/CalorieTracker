@@ -180,7 +180,7 @@ const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) =
         <Input
           {...register("fat", { valueAsNumber: true })}
           id="food_fat"
-          placeholder="Carbs"
+          placeholder="Fats"
           type="text"
           defaultValue={initialData?.fat}
         />

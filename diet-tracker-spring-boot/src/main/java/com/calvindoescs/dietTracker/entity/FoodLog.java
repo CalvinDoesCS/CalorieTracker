@@ -41,4 +41,14 @@ public class FoodLog {
         this.mealType = mealType;
     }
 
+    @Override
+    public String toString() {
+        return "FoodLog{" +
+                "id=" + id +
+                ", user=" + user +
+                ", food=" + food +
+                ", logDate=" + logDate +
+                ", mealType=" + mealType.getDisplayName() +
+                '}';
+    }
 }

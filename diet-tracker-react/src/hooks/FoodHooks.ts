@@ -3,19 +3,26 @@ import Food from "../entities/Food";
 import APIClient from "../services/api-cilent";
 import ms from "ms";
 import createAxiosConfig from "../services/axios-config";
+import useTokenStore from "./useTokenStore";
 
 const apiClient = new APIClient<Food>("/foods");
 
-const axiosConfig = createAxiosConfig(null);
+export const useFoods = () => { 
+    const {accessToken} = useTokenStore();
+    const axiosConfig = createAxiosConfig(accessToken);
 
-export const useFoods = () => useQuery<Food[]>({
-    queryKey: ['foods'],
-    queryFn: apiClient.getAll,
-    staleTime: ms('24h'),
-    retry: 10,
-})
+    return useQuery<Food[]>({
+        queryKey: ['foods'],
+        queryFn: () => apiClient.getAll(axiosConfig),
+        staleTime: ms('24h'),
+        retry: 10,
+    })}
 
 export const useDeleteFoods = () => {
+
+    const {accessToken} = useTokenStore();
+    const axiosConfig = createAxiosConfig(accessToken);
+
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
         mutationKey: ['foods'],
@@ -48,6 +55,10 @@ export const useDeleteFoods = () => {
         })
 }
 export const useAddFoods = () => {
+
+    const {accessToken} = useTokenStore();
+    const axiosConfig = createAxiosConfig(accessToken);
+
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
         mutationKey: ['foods'],
@@ -81,6 +92,10 @@ export const useAddFoods = () => {
         })
 }
 export const useEditFoods = () => {
+
+    const {accessToken} = useTokenStore();
+    const axiosConfig = createAxiosConfig(accessToken);
+
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
         mutationKey: ['foods'],

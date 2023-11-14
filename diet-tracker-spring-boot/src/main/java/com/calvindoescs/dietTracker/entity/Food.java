@@ -1,5 +1,6 @@
 package com.calvindoescs.dietTracker.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +29,7 @@ public class Food {
     private double fat;
 
     @OneToMany(mappedBy="food")
+    @JsonIgnore
     private List<FoodLog> foodLogs;
 
     public Food(String name, String category, double calories, double protein, double carbohydrate, double fat) {
@@ -46,4 +48,5 @@ public class Food {
         foodLog.setFood(this);
         foodLogs.add(foodLog);
     }
+
 }
