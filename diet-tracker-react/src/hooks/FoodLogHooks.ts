@@ -1,19 +1,23 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import FoodLog from "../entities/FoodLog";
-import APIClient from "../services/api-cilent";
-import createAxiosConfig from "../services/axios-config";
-import useTokenStore from "./useTokenStore";
+import useAuthAPIClient from "./useAuthAPIClient";
 
-const apiClient = new APIClient<FoodLog>("/foodlog");
+
+
+// export const useFoodLog = () => { 
+//     const {accessToken} = useTokenStore();
+//     apiClient.setAccessToken(accessToken);
+    
+//     return 
+// })}
+
 
 export const useAddFoodLog = () => {
-    const {accessToken} = useTokenStore();
-    const axiosConfig = createAxiosConfig(accessToken);
-
+    const apiClient = useAuthAPIClient("/foodlog");
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
         mutationKey: ['foodlog'],
-        mutationFn: (foodLog : FoodLog) => apiClient.post(foodLog,axiosConfig),
+        mutationFn: (foodLog : FoodLog) => apiClient.post(foodLog),
         onMutate: async (newFood) => {
             
             await queryClient.cancelQueries({ queryKey: ['foodlog'] })

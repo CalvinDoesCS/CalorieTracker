@@ -1,32 +1,25 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Food from "../entities/Food";
-import APIClient from "../services/api-cilent";
 import ms from "ms";
-import createAxiosConfig from "../services/axios-config";
-import useTokenStore from "./useTokenStore";
+import Food from "../entities/Food";
+import useAuthAPIClient from "./useAuthAPIClient";
 
-const apiClient = new APIClient<Food>("/foods");
+let endpoint = "/foods";
 
 export const useFoods = () => { 
-    const {accessToken} = useTokenStore();
-    const axiosConfig = createAxiosConfig(accessToken);
-
+    const apiClient = useAuthAPIClient<Food>(endpoint);
     return useQuery<Food[]>({
         queryKey: ['foods'],
-        queryFn: () => apiClient.getAll(axiosConfig),
+        queryFn: apiClient.getAll,
         staleTime: ms('24h'),
         retry: 10,
-    })}
+})}
 
 export const useDeleteFoods = () => {
-
-    const {accessToken} = useTokenStore();
-    const axiosConfig = createAxiosConfig(accessToken);
-
+    const apiClient = useAuthAPIClient<Food>(endpoint);
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
         mutationKey: ['foods'],
-        mutationFn: (foodId : number) => apiClient.delete(foodId,axiosConfig),
+        mutationFn: (foodId : number) => apiClient.delete(foodId),
         onMutate: async (foodId) => {
             
             await queryClient.cancelQueries({ queryKey: ['foods'] })
@@ -55,14 +48,11 @@ export const useDeleteFoods = () => {
         })
 }
 export const useAddFoods = () => {
-
-    const {accessToken} = useTokenStore();
-    const axiosConfig = createAxiosConfig(accessToken);
-
+    const apiClient = useAuthAPIClient<Food>(endpoint);
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
         mutationKey: ['foods'],
-        mutationFn: (food : Food) => apiClient.post(food,axiosConfig),
+        mutationFn: (food : Food) => apiClient.post(food),
         onMutate: async (newFood) => {
             
             await queryClient.cancelQueries({ queryKey: ['foods'] })
@@ -92,14 +82,11 @@ export const useAddFoods = () => {
         })
 }
 export const useEditFoods = () => {
-
-    const {accessToken} = useTokenStore();
-    const axiosConfig = createAxiosConfig(accessToken);
-
+    const apiClient = useAuthAPIClient<Food>(endpoint);
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
         mutationKey: ['foods'],
-        mutationFn: (food : Food) => apiClient.put(food.id,food,axiosConfig),
+        mutationFn: (food : Food) => apiClient.put(food.id,food),
         onMutate: async (newFood : Food) => {
             
             await queryClient.cancelQueries({ queryKey: ['foods'] })

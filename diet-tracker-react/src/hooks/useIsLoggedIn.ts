@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import useTokenStore from "./useTokenStore";
 import APIClient from "../services/api-cilent";
 import Token from "../entities/Token";
-import createAxiosConfig from "../services/axios-config";
 import useRefreshToken from "./useRefreshToken";
 import { useNavigate } from "react-router-dom";
 
@@ -30,9 +29,9 @@ export const useIsLoggedIn = () => {
     };
 
     useEffect(() => {
-        const axiosConfig = createAxiosConfig(accessToken);
+        apiClient.setAccessToken(accessToken);
         //Check if access Token is valid
-        apiClient.postEmpty(axiosConfig)
+        apiClient.postEmpty()
             .then(()=>{
                 setIsLoggedIn(true);
             })

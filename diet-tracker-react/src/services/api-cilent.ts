@@ -1,13 +1,30 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 const axiosInstance = axios.create({
+    withCredentials: true,
     baseURL: "http://localhost:8080/api"
-  });
+});
 class APIClient<T> {
   endpoint: string;
-
+  accessToken: string | null;
   constructor(endpoint: string){
     this.endpoint = endpoint;
+    this.accessToken = null;
+
+  // Set up request interceptor to add Authorization header when accessToken is not null
+    axiosInstance.interceptors.request.use((config) => {
+      if (this.accessToken !== null) {
+        config.headers.Authorization = `Bearer ${this.accessToken}`;
+      }
+      return config;
+    });
+  }
+  setAccessToken = (accessToken: string | null) => { 
+    if(accessToken == null){
+      this.accessToken == null
+    }else{
+      this.accessToken = accessToken;
+    }
   }
   getAll = (config: AxiosRequestConfig) => {
     return axiosInstance
