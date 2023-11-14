@@ -58,5 +58,8 @@ public class FoodLogService {
     public List<FoodLog> getAllFoodLogs() {
         return foodLogRepository.findAll();
     }
+    public List<FoodLog> findByUserAndMealType(User user, MealType mealType) {
+        return foodLogRepository.findByUserAndMealType(user, mealType);
+    }
 }
 

@@ -68,7 +68,7 @@ CREATE TABLE food_log (
     user_id BINARY(16),
     food_id INT,
     log_date DATE,
-    meal_type ENUM('Breakfast', 'Lunch', 'Dinner'),
+    meal_type ENUM('BREAKFAST', 'LUNCH', 'DINNER'),
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (food_id) REFERENCES food(id)
 );
