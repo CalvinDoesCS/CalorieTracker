@@ -32,7 +32,6 @@ export const useIsLoggedIn = () => {
         //Check if access Token is valid
         apiClient.postEmpty()
             .then((res)=>{
-                console.log(res);
                 setIsLoggedIn(true);
             })
             .catch(()=>{

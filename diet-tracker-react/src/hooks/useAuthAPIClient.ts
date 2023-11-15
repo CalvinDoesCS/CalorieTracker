@@ -16,7 +16,6 @@ const useAuthAPIClient = <T>(endpoint: string) => {
   const { accessToken } = useTokenStore();
 
   useEffect(() => {
-    console.log(accessToken);
     if(accessToken == null){
         apiClients[endpoint]?.setAccessToken(null);
     }else{

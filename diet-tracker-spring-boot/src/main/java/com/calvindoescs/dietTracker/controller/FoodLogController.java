@@ -47,7 +47,7 @@ public class FoodLogController {
         return new ResponseEntity<>("Created Food Log", HttpStatus.OK);
     }
     @GetMapping("/foodlog")
-    public ResponseEntity<?> getFoodLog(@RequestParam(required = false, name="mealType") String meal_type, @RequestHeader("Authorization") String authHeader){
+    public ResponseEntity<?> getFoodLog(@RequestParam(required = false, name="mealType") String meal_type,@RequestParam(required = false, name="logDate") String log_date, @RequestHeader("Authorization") String authHeader){
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             return new ResponseEntity<>("Invalid Header", HttpStatus.BAD_REQUEST);
         }
@@ -55,7 +55,7 @@ public class FoodLogController {
         try{
             String email = jwtService.extractUsername(jwtToken);
             User user = userService.findUserByEmail(email);
-            List<FoodLog> foodLogList = foodLogService.findByUserAndMealType(user,MealType.fromString(meal_type));
+            List<FoodLog> foodLogList = foodLogService.findByUserAndMealTypeAndLogDate(user,MealType.fromString(meal_type),Date.valueOf(log_date));
             List<FoodLogResponse> foodLogResponseList = new ArrayList<FoodLogResponse>();
             for(FoodLog foodLog : foodLogList){
                 foodLogResponseList.add(new FoodLogResponse(foodLog.getId(), foodLog.getFood(), foodLog.getLogDate().toString(), foodLog.getMealType()));
@@ -64,5 +64,15 @@ public class FoodLogController {
         }catch(Exception e){
             return new ResponseEntity<>("Token is invalid or cannot find user", HttpStatus.NOT_FOUND);
         }
+    }
+    @DeleteMapping("/foodlog/{id}")
+    public ResponseEntity<String> deleteFoodById(@PathVariable(name="id") int id) {
+        // Delete the food item by name
+        try{
+            foodLogService.deleteFood(id);
+        }catch(Exception e){
+            return new ResponseEntity<>("Id doesn't exist",HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>("Id Deleted: " + id, HttpStatus.OK);
     }
 }

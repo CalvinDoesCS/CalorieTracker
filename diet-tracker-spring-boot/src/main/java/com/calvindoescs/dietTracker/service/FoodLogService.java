@@ -58,8 +58,16 @@ public class FoodLogService {
     public List<FoodLog> getAllFoodLogs() {
         return foodLogRepository.findAll();
     }
-    public List<FoodLog> findByUserAndMealType(User user, MealType mealType) {
-        return foodLogRepository.findByUserAndMealType(user, mealType);
+    public List<FoodLog> findByUserAndMealTypeAndLogDate(User user, MealType mealType, Date logDate) {
+        return foodLogRepository.findByUserAndMealTypeAndLogDate(user, mealType, logDate);
+    }
+
+    @Transactional
+    public void deleteFood(int id) {
+       Optional<FoodLog> foodLog = foodLogRepository.findById(id);
+       if(foodLog.isPresent()){
+           foodLogRepository.delete(foodLog.get());
+       }
     }
 }
 

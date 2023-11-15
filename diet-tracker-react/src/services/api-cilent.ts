@@ -12,8 +12,7 @@ class APIClient<T> {
       baseURL: "http://localhost:8080/api"
     });
     // Set up request interceptor to add Authorization header when accessToken is not null
-    this.axiosInstance.interceptors.request.use((config) => {
-      console.log(config);
+    this.axiosInstance.interceptors.request.use((config) => { 
       if (this.accessToken !== null) {
         config.headers.Authorization = `Bearer ${this.accessToken}`;
       }else{

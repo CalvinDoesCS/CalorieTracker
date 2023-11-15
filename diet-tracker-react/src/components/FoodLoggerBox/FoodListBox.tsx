@@ -1,4 +1,4 @@
-import { Box, Button, Center, Flex, Heading, list, useColorModeValue, useDisclosure } from '@chakra-ui/react';
+import { Box, Button, Center, Flex, Heading, Spinner, list, useColorModeValue, useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
 import Food from '../../entities/Food';
 import FoodDropDown from '../FoodModal/FoodDropDown';
@@ -6,7 +6,7 @@ import ModalLayout from '../FoodModal/ModalLayout';
 import FoodList from './FoodList';
 import { useAddFoods } from '../../hooks/FoodHooks';
 import FoodCreateEditInput from '../FoodModal/FoodCreateEditInput';
-import { useAddFoodLog, useFoodLogs } from '../../hooks/FoodLogHooks';
+import { useAddFoodLog, useDeleteFoodLog, useFoodLogs } from '../../hooks/FoodLogHooks';
 import FoodLog from '../../entities/FoodLog';
 
 interface Props{
@@ -25,8 +25,8 @@ const FoodListBox = ({listName} : Props) => {
   const [totalCalorie, setTotalCalorie] = useState(0);
   const {isOpen, onOpen, onClose} = useDisclosure();
   const addFoodLog = useAddFoodLog(listName);
-  const {data, isLoading, error} = useFoodLogs(listName);
-
+  const deleteFoodLog = useDeleteFoodLog(listName);
+  const {data, isLoading, error} = useFoodLogs(listName, getFormattedDate());
   const addFoods = useAddFoods();
   const { isOpen : isOpenAdd, onOpen : onOpenAdd, onClose : onCloseAdd } = useDisclosure();
   const onAdd = (food: Food) => {
@@ -39,10 +39,16 @@ const FoodListBox = ({listName} : Props) => {
     addFoodLog.mutate(foodLog);
     setTotalCalorie(totalCalorie+food.calories);
   }
+  const handleDelete = (foodId: number) => {
+    deleteFoodLog.mutate(foodId);
+  }
+  if(error){
+    return; 
+  }
   return (
     <Box>
         <Heading bgColor={useColorModeValue('gray.200', 'gray.900')} padding={2}>{listName}</Heading>
-        <FoodList foodList={data || []} />
+        <FoodList handleDelete={handleDelete}foodList={data || []} />
         <Flex padding={3} justifyContent={'space-between'}>
           <Button onClick={onOpen}> + Add {listName} Item</Button>
           <Center>Total Calories: {totalCalorie}</Center>  
