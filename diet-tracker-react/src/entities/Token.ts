@@ -1,8 +1,6 @@
-
-
-export default interface Token{
-    accessToken: string | null;
-    expiresIn: number;
-    email: string;
-    tokenType : string;
+export default interface Token {
+  accessToken: string | null;
+  expiresIn: number;
+  email: string;
+  tokenType: string;
 }

@@ -20,21 +20,20 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import useLoginUser from "../hooks/useAuth";
 const LoginForm = () => {
-  
   const schema = z.object({
-    email: z
-      .string(), 
-    password: z
-      .string()
+    email: z.string(),
+    password: z.string(),
   });
 
   type FormData = z.infer<typeof schema>;
 
   const navigate = useNavigate();
 
-  const [isErrorVisible, setisErrorVisible] = useState(true); 
+  const [isErrorVisible, setisErrorVisible] = useState(true);
 
-  const { register, handleSubmit } = useForm<FormData>({resolver : zodResolver(schema)});
+  const { register, handleSubmit } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
 
   const loginUser = useLoginUser();
 
@@ -42,7 +41,7 @@ const LoginForm = () => {
     // Set the state to false to remove the component
     setisErrorVisible(false);
   };
-  const onSubmit = (data : FormData) => {
+  const onSubmit = (data: FormData) => {
     setisErrorVisible(true);
     loginUser.mutate({
       email: data.email,
@@ -52,8 +51,8 @@ const LoginForm = () => {
   };
   useEffect(() => {
     if (loginUser.isSuccess) {
-      navigate("/");
-    } 
+      navigate("/food-logger");
+    }
   }, [loginUser]);
 
   return (
@@ -94,7 +93,15 @@ const LoginForm = () => {
                 onChange={setChangeEvent}
               />
             </FormControl>
-            {loginUser.isError && isErrorVisible && <Alert status='error' marginY={2}><AlertIcon />Incorrect Email or Password Combination</Alert> }
+            {loginUser.isError && isErrorVisible && (
+              <Alert
+                status="error"
+                marginY={2}
+              >
+                <AlertIcon />
+                Incorrect Email or Password Combination
+              </Alert>
+            )}
             <Stack spacing={10}>
               <Stack
                 direction={{ base: "column", sm: "row" }}

@@ -22,12 +22,12 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import useSignOut from "../hooks/useSignOut";
 import useTokenStore from "../hooks/useTokenStore";
 export default function NavBar() {
-  const { isOpen, onToggle } = useDisclosure(); 
-  const {accessToken} = useTokenStore();
+  const { isOpen, onToggle } = useDisclosure();
+  const { accessToken } = useTokenStore();
 
   const signOut = useSignOut();
   const logout = () => {
@@ -347,7 +347,7 @@ interface NavItem {
 const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Food Log",
-    href: "/",
+    href: "/food-logger",
   },
   {
     label: "Food Log History",

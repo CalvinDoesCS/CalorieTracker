@@ -17,7 +17,12 @@ interface Props {
   initialData?: Food;
 }
 
-const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) => {
+const FoodCreateEditInput = ({
+  initialData,
+  onSubmit,
+  formId,
+  onClose,
+}: Props) => {
   const schema = z.object({
     name: z.string().min(1, "Name is required"),
     category: z.string().min(1, "Category is required"),
@@ -30,7 +35,7 @@ const FoodCreateEditInput = ({ initialData, onSubmit,formId, onClose }: Props) =
     carbohydrate: z
       .number({ invalid_type_error: "Not a Number" })
       .nonnegative("Cannot be negative"),
-    fat:  z     
+    fat: z
       .number({ invalid_type_error: "Not a Number" })
       .nonnegative("Cannot be negative"),
   });

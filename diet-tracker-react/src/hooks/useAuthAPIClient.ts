@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import APIClient from '../services/api-cilent';
-import useTokenStore from './useTokenStore';
+import { useEffect } from "react";
+import APIClient from "../services/api-cilent";
+import useTokenStore from "./useTokenStore";
 
 // Define a type for the generic object type of apiClients
 type ApiClientObject<T> = Record<string, APIClient<T>>;
@@ -16,10 +16,10 @@ const useAuthAPIClient = <T>(endpoint: string) => {
   const { accessToken } = useTokenStore();
 
   useEffect(() => {
-    if(accessToken == null){
-        apiClients[endpoint]?.setAccessToken(null);
-    }else{
-        apiClients[endpoint]?.setAccessToken(accessToken);
+    if (accessToken == null) {
+      apiClients[endpoint]?.setAccessToken(null);
+    } else {
+      apiClients[endpoint]?.setAccessToken(accessToken);
     }
   }, [accessToken, endpoint]);
 

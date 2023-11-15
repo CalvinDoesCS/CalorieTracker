@@ -3,20 +3,17 @@ import APIClient from "../services/api-cilent";
 import useTokenStore from "./useTokenStore";
 import Token from "../entities/Token";
 
+const apiClient = new APIClient<Token>("/auth/logout");
 
-
-const apiClient = new APIClient<Token>('/auth/logout');
-
-const useSignOut = () =>{
-  const {clearToken} = useTokenStore();
-
+const useSignOut = () => {
+  const { clearToken } = useTokenStore();
 
   return useMutation({
-    mutationFn: () => apiClient.postEmpty()
-    .then( (res) => {
+    mutationFn: () =>
+      apiClient.postEmpty().then((res) => {
         clearToken();
         return res;
-      })
-    })  
-}
+      }),
+  });
+};
 export default useSignOut;

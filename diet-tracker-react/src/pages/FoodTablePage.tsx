@@ -2,7 +2,7 @@ import { Heading, VStack } from "@chakra-ui/react";
 import FoodListBoxes from "../components/FoodLoggerBox/FoodListBoxes";
 import "../index.css";
 
-const HomePage = () => {
+const FoodTablePage = () => {
   const date = new Date();
     const showTime = date.getMonth() 
         + '/' + date.getDate() 
@@ -17,4 +17,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default FoodTablePage;

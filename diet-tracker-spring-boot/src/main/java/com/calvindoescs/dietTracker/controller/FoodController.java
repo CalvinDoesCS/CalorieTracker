@@ -33,19 +33,20 @@ public class FoodController {
         try{
             foodService.deleteFood(id);
         }catch(Exception e){
-            return new ResponseEntity<>("Name doesn't exist",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<> ("Name doesn't exist",HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>("Id Deleted: " + id, HttpStatus.OK);
     }
     @PostMapping("/foods")
-    public ResponseEntity<String> addFood(@RequestBody FoodRequest foodRequest){
-        Food food = new Food(foodRequest.getName(),foodRequest.getCategory(),foodRequest.getCalories(),foodRequest.getProtein(),foodRequest.getCarbohydrate(),foodRequest.getFat());
+    public ResponseEntity<?> addFood(@RequestBody FoodRequest foodRequest) {
+        Food food = new Food(foodRequest.getName(), foodRequest.getCategory(), foodRequest.getCalories(), foodRequest.getProtein(), foodRequest.getCarbohydrate(), foodRequest.getFat());
+        Food createdFood;
         try {
-            foodService.createFood(food);
-        }catch (Exception e){
+            createdFood = foodService.createFood(food);
+        } catch (Exception e) {
             return new ResponseEntity<>("Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>("Food Created", HttpStatus.CREATED);
+        return new ResponseEntity<>(createdFood, HttpStatus.CREATED);
     }
     @PutMapping("/foods/{id}")
     public ResponseEntity<Food> updateFood(
