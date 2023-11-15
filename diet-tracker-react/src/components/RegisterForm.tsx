@@ -58,7 +58,6 @@ const RegisterForm = () => {
       email: data.email,
       password: data.password,
     });
-    console.log("Submitting the form", addUser);
   };
 
   const [showPassword, setShowPassword] = useState(false);

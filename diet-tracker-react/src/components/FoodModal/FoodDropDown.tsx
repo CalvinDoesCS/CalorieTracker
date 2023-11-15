@@ -57,7 +57,6 @@ const FoodDropDown = ({ onSubmit, onClose, formId, foodSelected }: Props) => {
           onSubmit(selectedFood);
           onClose();
         } else {
-          console.log("Invalid Selection");
         }
       }}
       id={formId}

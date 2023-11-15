@@ -49,11 +49,9 @@ export const FoodsTable = () => {
     deleteFoods.mutate(id);
   };
   const onAdd = (data: Food) => {
-    console.log(data);
     addFoods.mutate(data);
   };
   const onEdit = (data: Food) => {
-    console.log(data);
     editFoods.mutate(data);
   };
   if (error) return null;

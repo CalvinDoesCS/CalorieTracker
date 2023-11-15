@@ -17,7 +17,6 @@ export const useIsLoggedIn = () => {
     const refreshAccessToken = async () => {
         try {
           const result = await refreshToken.mutateAsync();
-          console.log("Access token refreshed successfully.", result.email);
         } catch (error) {
           // User need to login back in
           console.error("Token refresh failed.", error);

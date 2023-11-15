@@ -16,7 +16,6 @@ class APIClient<T> {
       if (this.accessToken !== null) {
         config.headers.Authorization = `Bearer ${this.accessToken}`;
       } else {
-        console.log("Delete Header");
         delete config.headers.Authorization;
       }
       return config;

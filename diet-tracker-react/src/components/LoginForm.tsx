@@ -47,7 +47,6 @@ const LoginForm = () => {
       email: data.email,
       password: data.password,
     });
-    console.log("Submitting the form", data);
   };
   useEffect(() => {
     if (loginUser.isSuccess) {

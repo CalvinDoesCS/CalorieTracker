@@ -52,7 +52,6 @@ const FoodCreateEditInput = ({
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        console.log("Subtmitting");
         handleSubmit((data: FormData) => {
           onSubmit({ ...data, id: initialData?.id || 0 });
           onClose();
