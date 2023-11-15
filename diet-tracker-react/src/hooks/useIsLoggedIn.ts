@@ -4,15 +4,15 @@ import APIClient from "../services/api-cilent";
 import Token from "../entities/Token";
 import useRefreshToken from "./useRefreshToken";
 import { useNavigate } from "react-router-dom";
-
-
-const apiClient = new APIClient<Token>('/auth/validateAccessToken');
+import useAuthAPIClient from "./useAuthAPIClient";
 
 export const useIsLoggedIn = () => {
     const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const refreshToken = useRefreshToken();
     const {accessToken,clearToken} = useTokenStore();
+    const apiClient = useAuthAPIClient<Token>('/auth/validateAccessToken');
+
 
     const refreshAccessToken = async () => {
         try {
@@ -29,10 +29,10 @@ export const useIsLoggedIn = () => {
     };
 
     useEffect(() => {
-        apiClient.setAccessToken(accessToken);
         //Check if access Token is valid
         apiClient.postEmpty()
-            .then(()=>{
+            .then((res)=>{
+                console.log(res);
                 setIsLoggedIn(true);
             })
             .catch(()=>{
