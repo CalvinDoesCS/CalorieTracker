@@ -1,34 +1,39 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import FoodLog from "../entities/FoodLog";
 import useAuthAPIClient from "./useAuthAPIClient";
+import ms from "ms";
+
+let endpoint = "/foodlog"
+
+export const useFoodLogs = (mealType: string) => {
+    const apiClient = useAuthAPIClient<FoodLog>(endpoint);
+  
+    return useQuery<FoodLog[], Error, FoodLog[]>({
+      queryKey: ['foodlog', mealType], // Use an array to include the mealType in the queryKey
+      queryFn: () => apiClient.getAll({ params: { mealType } }), 
+      staleTime: ms('24h'),
+      retry: 3, 
+    });
+  };
 
 
-
-// export const useFoodLog = () => { 
-//     const {accessToken} = useTokenStore();
-//     apiClient.setAccessToken(accessToken);
-    
-//     return 
-// })}
-
-
-export const useAddFoodLog = () => {
-    const apiClient = useAuthAPIClient("/foodlog");
+export const useAddFoodLog = (mealType: string) => {
+    const apiClient = useAuthAPIClient<FoodLog>(endpoint);
     const queryClient = useQueryClient(); // Get the query client instance
     return useMutation({
-        mutationKey: ['foodlog'],
+        mutationKey: ['foodlog',mealType],
         mutationFn: (foodLog : FoodLog) => apiClient.post(foodLog),
         onMutate: async (newFood) => {
             
-            await queryClient.cancelQueries({ queryKey: ['foodlog'] })
+            await queryClient.cancelQueries({ queryKey: ['foodlog',mealType] })
 
             // Snapshot the previous value
-            const previousFoodLog = queryClient.getQueryData<FoodLog[]>(['foodlog']) || [];
+            const previousFoodLog = queryClient.getQueryData<FoodLog[]>(['foodlog',mealType]) || [];
             
             if (previousFoodLog) {
                 // Ensure previousFood is not undefined before working with it
                 // Optimistically update the 'Food' data
-                queryClient.setQueryData<FoodLog[]>(['foodlog'], (previousFoodLog) => [
+                queryClient.setQueryData<FoodLog[]>(['foodlog',mealType], (previousFoodLog) => [
                   ...(previousFoodLog || []),
                   newFood,
                 ]);
@@ -38,7 +43,7 @@ export const useAddFoodLog = () => {
           // If the mutation fails,
           // use the context returned from onMutate to roll back
           onError: (err, newFood, context) => {
-            queryClient.setQueryData(['foodlog'], context?.previousFoodLog)
+            queryClient.setQueryData(['foodlog',mealType], context?.previousFoodLog)
           },
           // Always refetch after error or success:
           onSettled: () => {

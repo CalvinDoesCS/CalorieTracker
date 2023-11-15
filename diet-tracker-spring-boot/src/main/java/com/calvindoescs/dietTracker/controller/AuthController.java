@@ -1,11 +1,11 @@
 package com.calvindoescs.dietTracker.controller;
 
+import com.calvindoescs.dietTracker.entity.FoodLog;
+import com.calvindoescs.dietTracker.entity.MealType;
 import com.calvindoescs.dietTracker.entity.RefreshToken;
+import com.calvindoescs.dietTracker.entity.User;
 import com.calvindoescs.dietTracker.exception.TokenRefreshException;
-import com.calvindoescs.dietTracker.payload.AuthenticationRequest;
-import com.calvindoescs.dietTracker.payload.AuthenticationResponse;
-import com.calvindoescs.dietTracker.payload.RefreshTokenResponse;
-import com.calvindoescs.dietTracker.payload.RegisterRequest;
+import com.calvindoescs.dietTracker.payload.*;
 import com.calvindoescs.dietTracker.service.AuthenticationService;
 import com.calvindoescs.dietTracker.service.RefreshTokenService;
 import jakarta.servlet.http.Cookie;
@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -79,8 +81,16 @@ public class AuthController {
         }
     }
     @PostMapping("/validateAccessToken")
-    public ResponseEntity<String> validateAToken(){
-        return ResponseEntity.ok("Token is valid");
+    public ResponseEntity<String> validateAToken(@RequestHeader("Authorization") String authHeader){
+        if (authHeader == null || !authHeader.startsWith("Bearer")) {
+            return new ResponseEntity<>("Invalid Header", HttpStatus.BAD_REQUEST);
+        }
+        String jwtToken = authHeader.substring(7);
+        if(authenticationService.validateToken(jwtToken)){
+            return new ResponseEntity<>("Token is Valid", HttpStatus.OK);
+        }
+            return new ResponseEntity<>("Token is invalid", HttpStatus.NOT_FOUND);
+
     }
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response, @CookieValue(name = "refreshToken") String token) {

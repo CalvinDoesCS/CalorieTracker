@@ -55,4 +55,8 @@ public class AuthenticationService {
 
         return new AuthenticationResponse(jwtToken, user.getEmail(), jwtService.getExpirationInSeconds());
     }
+    public Boolean validateToken(String token){
+        String email = jwtService.extractUsername(token);
+        return email != null && !email.isEmpty();
+    }
 }

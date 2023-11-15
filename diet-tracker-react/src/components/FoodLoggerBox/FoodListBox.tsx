@@ -6,7 +6,7 @@ import ModalLayout from '../FoodModal/ModalLayout';
 import FoodList from './FoodList';
 import { useAddFoods } from '../../hooks/FoodHooks';
 import FoodCreateEditInput from '../FoodModal/FoodCreateEditInput';
-import { useAddFoodLog } from '../../hooks/FoodLogHooks';
+import { useAddFoodLog, useFoodLogs } from '../../hooks/FoodLogHooks';
 import FoodLog from '../../entities/FoodLog';
 
 interface Props{
@@ -22,38 +22,33 @@ function getFormattedDate(): string {
 }
 
 const FoodListBox = ({listName} : Props) => {
-  const [foodList, setFoodList] = useState<Food[]>([]);
   const [totalCalorie, setTotalCalorie] = useState(0);
   const {isOpen, onOpen, onClose} = useDisclosure();
-  const addFoodLog = useAddFoodLog();
+  const addFoodLog = useAddFoodLog(listName);
+  const {data, isLoading, error} = useFoodLogs(listName);
 
   const addFoods = useAddFoods();
   const { isOpen : isOpenAdd, onOpen : onOpenAdd, onClose : onCloseAdd } = useDisclosure();
-  const onAdd = () => {
-
+  const onAdd = (food: Food) => {
+    const foodLog : FoodLog = {
+      id: 0,
+      food: food,
+      logDate: getFormattedDate(),
+      mealType: listName,
+    }
+    addFoodLog.mutate(foodLog);
+    setTotalCalorie(totalCalorie+food.calories);
   }
   return (
     <Box>
         <Heading bgColor={useColorModeValue('gray.200', 'gray.900')} padding={2}>{listName}</Heading>
-        <FoodList foodList={foodList} />
+        <FoodList foodList={data || []} />
         <Flex padding={3} justifyContent={'space-between'}>
           <Button onClick={onOpen}> + Add {listName} Item</Button>
           <Center>Total Calories: {totalCalorie}</Center>  
         </Flex>
         <ModalLayout isOpen={isOpen} onClose={onClose} buttonName={'Add Food Item'} headerName={'Food List'} formId={'foodDropDown'}>
-          <FoodDropDown onSubmit={(food: Food) => {
-            setFoodList([...foodList, food])
-            setTotalCalorie(totalCalorie + food.calories)
-            console.log(getFormattedDate());
-            const foodlog: FoodLog = {
-              id: 0,
-              foodId: food.id,
-              logDate: getFormattedDate(),
-              mealType: listName,
-            };
-            addFoodLog.mutate(foodlog)
-
-            }} onClose={onClose} formId={'foodDropDown'}></FoodDropDown>
+          <FoodDropDown onSubmit={onAdd} onClose={onClose} formId={'foodDropDown'}></FoodDropDown>
           <Flex justifyContent={'end'}>
             <Button onClick={onOpenAdd}>Create new Food</Button>
           </Flex>

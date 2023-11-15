@@ -33,7 +33,6 @@ public class FoodLogController {
     }
     @PostMapping("/foodlog")
     public ResponseEntity<?> createFoodLog(@RequestBody FoodLogRequest foodLogRequest, @RequestHeader("Authorization") String authHeader){
-
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             return new ResponseEntity<>("Invalid Header", HttpStatus.BAD_REQUEST);
         }
@@ -41,7 +40,7 @@ public class FoodLogController {
         try{
             String email = jwtService.extractUsername(jwtToken);
             User user = userService.findUserByEmail(email);
-            foodLogService.createFoodLog(user.getUserId(),foodLogRequest.getFoodId(), Date.valueOf(foodLogRequest.getLogDate()),  MealType.fromString(foodLogRequest.getMealType()));
+            foodLogService.createFoodLog(user.getUserId(),foodLogRequest.getFood().getId(), Date.valueOf(foodLogRequest.getLogDate()),  MealType.fromString(foodLogRequest.getMealType()));
         }catch(Exception e){
             return new ResponseEntity<>("Token is invalid or cannot find user", HttpStatus.NOT_FOUND);
         }
