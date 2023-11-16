@@ -2,19 +2,19 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 
 class APIClient<T> {
   endpoint: string;
-  accessToken: string | null;
+  static accessToken: string | null;
   axiosInstance: AxiosInstance;
   constructor(endpoint: string) {
     this.endpoint = endpoint;
-    this.accessToken = null;
+    APIClient.accessToken = null;
     this.axiosInstance = axios.create({
       withCredentials: true,
       baseURL: "http://localhost:8080/api",
     });
     // Set up request interceptor to add Authorization header when accessToken is not null
     this.axiosInstance.interceptors.request.use((config) => {
-      if (this.accessToken !== null) {
-        config.headers.Authorization = `Bearer ${this.accessToken}`;
+      if (APIClient.accessToken !== null) {
+        config.headers.Authorization = `Bearer ${APIClient.accessToken}`;
       } else {
         delete config.headers.Authorization;
       }
@@ -26,9 +26,9 @@ class APIClient<T> {
   };
   setAccessToken = (token: string | null) => {
     if (token == null) {
-      this.accessToken = null;
+      APIClient.accessToken = null;
     } else {
-      this.accessToken = token;
+      APIClient.accessToken = token;
     }
   };
   getAll = (config: AxiosRequestConfig) => {
