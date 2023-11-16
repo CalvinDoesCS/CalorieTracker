@@ -5,38 +5,44 @@ const apiClient = new APIClient<Token>("/auth/validateAccessToken");
 
 export const checkAuthentication = (
   token: string | null,
-  setToken: Function
+  setToken: Function,
+  clearToken: Function
 ): Promise<boolean> => {
   return new Promise((resolve) => {
-    const handleTokenRefreshError = (error: any) => {
-      console.log("Failed to Refresh Token");
-      resolve(false);
-    };
-
-    const handleTokenValidationOrRequestError = (error: any) => {
-      console.log("Invalid Access Token", "Trying to Refresh Token...");
-      apiClient.setEndPoint("/auth/refreshToken");
-      apiClient.setAccessToken(null);
-      apiClient
-        .post()
-        .then((res) => {
-          console.log("Refresh Token Successfully");
-          setToken(res.access_token, res.expires_in, res.email, res.token_type);
-          resolve(true); // Resolve the promise with true after token refresh
-        })
-        .catch(handleTokenRefreshError);
-    };
-
     apiClient.setAccessToken(token);
     apiClient
       .post()
       .then((res) => {
-        console.log("Access Token Valid", res);
+        console.log("Valid Access Token");
         resolve(true); // Resolve the promise with true if access token is valid
       })
-      .catch(handleTokenValidationOrRequestError)
+      .catch(() => {
+        console.log("Invalid Access Token", "Trying to Refresh Token...");
+        handleRefreshToken(setToken, clearToken);
+      })
       .finally(() => {
         apiClient.setEndPoint("/auth/validateAccessToken");
+      });
+  });
+};
+export const handleRefreshToken = (
+  setToken: Function,
+  clearToken: Function
+): Promise<boolean> => {
+  return new Promise((resolve) => {
+    apiClient.setEndPoint("/auth/refreshToken");
+    apiClient.setAccessToken(null);
+    apiClient
+      .post()
+      .then((res) => {
+        console.log("Refresh Token Successfully");
+        setToken(res.access_token, res.expires_in, res.email, res.token_type);
+        resolve(true); // Resolve the promise with true after token refresh
+      })
+      .catch((error: any) => {
+        console.log("Failed to Refresh Token");
+        clearToken();
+        resolve(false);
       });
   });
 };

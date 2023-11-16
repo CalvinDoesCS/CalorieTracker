@@ -31,7 +31,7 @@ public class FoodLogController {
         this.jwtService = jwtService;
         this.userService = userService;
     }
-    @PostMapping("/foodlog")
+    @PostMapping("/foodlogs")
     public ResponseEntity<?> createFoodLog(@RequestBody FoodLogRequest foodLogRequest, @RequestHeader("Authorization") String authHeader){
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             return new ResponseEntity<>("Invalid Header", HttpStatus.BAD_REQUEST);
@@ -46,7 +46,7 @@ public class FoodLogController {
         }
         return new ResponseEntity<>("Created Food Log", HttpStatus.OK);
     }
-    @GetMapping("/foodlog")
+    @GetMapping("/foodlogs")
     public ResponseEntity<?> getFoodLog(@RequestParam(required = false, name="mealType") String meal_type,@RequestParam(required = false, name="logDate") String log_date, @RequestHeader("Authorization") String authHeader){
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             return new ResponseEntity<>("Invalid Header", HttpStatus.BAD_REQUEST);
@@ -65,7 +65,7 @@ public class FoodLogController {
             return new ResponseEntity<>("Token is invalid or cannot find user", HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("/foodlog/{id}")
+    @DeleteMapping("/foodlogs/{id}")
     public ResponseEntity<String> deleteFoodById(@PathVariable(name="id") int id) {
         // Delete the food item by name
         try{

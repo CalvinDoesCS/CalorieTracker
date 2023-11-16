@@ -1,13 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import FoodLog from "../entities/FoodLog";
-import useAuthAPIClient from "./useAuthAPIClient";
 import ms from "ms";
+import APIClient from "../services/api-cilent";
 
-let endpoint = "/foodlog";
-
+const apiClient = new APIClient<FoodLog>("/foodlogs");
 export const useFoodLogs = (mealType: string, logDate: string) => {
-  const apiClient = useAuthAPIClient<FoodLog>(endpoint);
-
   return useQuery<FoodLog[], Error, FoodLog[]>({
     queryKey: ["foodlog", mealType], // Use an array to include the mealType in the queryKey
     queryFn: () => apiClient.getAll({ params: { mealType, logDate } }),
@@ -17,7 +14,6 @@ export const useFoodLogs = (mealType: string, logDate: string) => {
 };
 
 export const useAddFoodLog = (mealType: string) => {
-  const apiClient = useAuthAPIClient<FoodLog>(endpoint);
   const queryClient = useQueryClient(); // Get the query client instance
   return useMutation({
     mutationKey: ["foodlog", mealType],
@@ -52,7 +48,6 @@ export const useAddFoodLog = (mealType: string) => {
 };
 
 export const useDeleteFoodLog = (mealType: string) => {
-  const apiClient = useAuthAPIClient<FoodLog>(endpoint);
   const queryClient = useQueryClient(); // Get the query client instance
   return useMutation({
     mutationKey: ["foodlog", mealType],

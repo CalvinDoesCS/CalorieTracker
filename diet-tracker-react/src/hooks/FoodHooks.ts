@@ -1,12 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ms from "ms";
 import Food from "../entities/Food";
-import useAuthAPIClient from "./useAuthAPIClient";
+import APIClient from "../services/api-cilent";
 
-let endpoint = "/foods";
+const apiClient = new APIClient<Food>("/foods");
 
 export const useFoods = () => {
-  const apiClient = useAuthAPIClient<Food>(endpoint);
   return useQuery<Food[]>({
     queryKey: ["foods"],
     queryFn: apiClient.getAll,
@@ -16,7 +15,6 @@ export const useFoods = () => {
 };
 
 export const useDeleteFoods = () => {
-  const apiClient = useAuthAPIClient<Food>(endpoint);
   const queryClient = useQueryClient(); // Get the query client instance
   return useMutation({
     mutationKey: ["foods"],
@@ -51,7 +49,6 @@ export const useDeleteFoods = () => {
   });
 };
 export const useAddFoods = () => {
-  const apiClient = useAuthAPIClient<Food>(endpoint);
   const queryClient = useQueryClient(); // Get the query client instance
   return useMutation({
     mutationKey: ["foods"],
@@ -87,7 +84,6 @@ export const useAddFoods = () => {
   });
 };
 export const useEditFoods = () => {
-  const apiClient = useAuthAPIClient<Food>(endpoint);
   const queryClient = useQueryClient(); // Get the query client instance
   return useMutation({
     mutationKey: ["foods"],
