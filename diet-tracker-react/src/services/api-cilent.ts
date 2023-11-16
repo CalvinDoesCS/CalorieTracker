@@ -21,6 +21,9 @@ class APIClient<T> {
       return config;
     });
   }
+  setEndPoint = (endpoint: string) => {
+    this.endpoint = endpoint;
+  };
   setAccessToken = (token: string | null) => {
     if (token == null) {
       this.accessToken = null;
@@ -38,14 +41,9 @@ class APIClient<T> {
       .get<T>(this.endpoint + "/" + id)
       .then((res) => res.data);
   };
-  postEmpty = (config?: AxiosRequestConfig) => {
+  post = (object?: T, config?: AxiosRequestConfig) => {
     return this.axiosInstance
-      .post(this.endpoint, null, config)
-      .then((res) => res.data);
-  };
-  post = (object: T, config?: AxiosRequestConfig) => {
-    return this.axiosInstance
-      .post(this.endpoint, object, config)
+      .post(this.endpoint, object || null, config)
       .then((res) => res.data);
   };
   delete = (id: string | number, config?: AxiosRequestConfig) => {

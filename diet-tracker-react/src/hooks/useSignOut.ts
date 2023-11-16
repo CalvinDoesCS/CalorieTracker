@@ -10,7 +10,7 @@ const useSignOut = () => {
 
   return useMutation({
     mutationFn: () =>
-      apiClient.postEmpty().then((res) => {
+      apiClient.post().then((res) => {
         clearToken();
         return res;
       }),

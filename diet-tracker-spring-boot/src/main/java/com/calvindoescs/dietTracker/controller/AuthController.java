@@ -94,9 +94,7 @@ public class AuthController {
     }
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response, @CookieValue(name = "refreshToken") String token) {
-        System.out.println(token);
         try {
-            int numDeleted = refreshTokenService.deleteByToken(token);
             //Delele Refrsh Cookie
             Cookie[] cookies = request.getCookies();
 
@@ -111,6 +109,9 @@ public class AuthController {
                         newCookie.setDomain(cookie.getDomain());
                         // Add the new cookie to the response to delete the original cookie
                         response.addCookie(newCookie);
+
+                        //Delete RefreshToken in database
+                        int numDeleted = refreshTokenService.deleteByToken(token);
                     }
                 }
             }
