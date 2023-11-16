@@ -6,7 +6,10 @@ import getFormattedDate from "../util/formattedDate";
 const FoodTablePage = () => {
   return (
     <VStack spacing={4}>
-      <Heading my={2}> Food Logger for {getFormattedDate()}</Heading>
+      <Heading my={2}>
+        {" "}
+        Food Logger for {getFormattedDate("month-day-year")}
+      </Heading>
       <FoodListBoxes boxTitles={["Breakfast", "Lunch", "Dinner"]} />
     </VStack>
   );

@@ -31,8 +31,12 @@ const FoodListBox = ({ listName }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const addFoodLog = useAddFoodLog(listName);
   const deleteFoodLog = useDeleteFoodLog(listName);
-  const { data, isLoading, error } = useFoodLogs(listName, getFormattedDate());
+  const { data, isLoading, error } = useFoodLogs(
+    listName,
+    getFormattedDate("year-month-day")
+  );
   const addFoods = useAddFoods();
+
   const [selectedFood, setSelectedFood] = useState<Food>();
   const {
     isOpen: isOpenAdd,
@@ -44,11 +48,10 @@ const FoodListBox = ({ listName }: Props) => {
     const foodLog: FoodLog = {
       id: 0,
       food: food,
-      logDate: getFormattedDate(),
+      logDate: getFormattedDate("year-month-day"),
       mealType: listName,
     };
     addFoodLog.mutate(foodLog);
-    setTotalCalorie(totalCalorie + food.calories);
     setSelectedFood(undefined);
   };
   const onAddFood = (food: Food) => {
@@ -59,8 +62,8 @@ const FoodListBox = ({ listName }: Props) => {
     });
   };
 
-  const handleDelete = (foodId: number) => {
-    deleteFoodLog.mutate(foodId);
+  const handleDelete = (foodLogId: number) => {
+    deleteFoodLog.mutate(foodLogId);
   };
   if (error) {
     return;
@@ -75,6 +78,7 @@ const FoodListBox = ({ listName }: Props) => {
       </Heading>
       <FoodList
         handleDelete={handleDelete}
+        setTotalCalorie={setTotalCalorie}
         foodList={data || []}
       />
       <Flex

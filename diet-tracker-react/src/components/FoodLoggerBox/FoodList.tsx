@@ -1,13 +1,23 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
 import FoodLog from "../../entities/FoodLog";
+import { useEffect } from "react";
 
 interface Props {
   foodList: FoodLog[];
-  handleDelete: (foodId: number) => void;
+  handleDelete: (foodLogId: number) => void;
+  setTotalCalorie: (calorie: number) => void;
 }
 
-const FoodList = ({ foodList, handleDelete }: Props) => {
+const FoodList = ({ foodList, handleDelete, setTotalCalorie }: Props) => {
+  useEffect(() => {
+    // Calculate total calories initially when foodList changes
+    const totalCalories = foodList.reduce((total, foodLog) => {
+      return total + foodLog.food.calories;
+    }, 0);
+    setTotalCalorie(totalCalories);
+  }, [foodList]);
+
   return (
     <Box>
       {foodList?.map((foodLog) => (
