@@ -1,18 +1,13 @@
 import { Heading, VStack } from "@chakra-ui/react";
 import FoodListBoxes from "../components/FoodLoggerBox/FoodListBoxes";
 import "../index.css";
+import getFormattedDate from "../util/formattedDate";
 
 const FoodTablePage = () => {
-  const date = new Date();
-    const showTime = date.getMonth() 
-        + '/' + date.getDate() 
-        + "/" + date.getFullYear();
   return (
     <VStack spacing={4}>
-
-      <Heading my={2}> Food Logger for {showTime} </Heading>
-      <FoodListBoxes boxTitles={["Breakfast", "Lunch", "Dinner"]}/>
-      
+      <Heading my={2}> Food Logger for {getFormattedDate()}</Heading>
+      <FoodListBoxes boxTitles={["Breakfast", "Lunch", "Dinner"]} />
     </VStack>
   );
 };
