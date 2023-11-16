@@ -18,7 +18,7 @@ export const checkAuthentication = (
       })
       .catch(() => {
         console.log("Invalid Access Token", "Trying to Refresh Token...");
-        handleRefreshToken(setToken, clearToken);
+        resolve(handleRefreshToken(setToken, clearToken));
       })
       .finally(() => {
         apiClient.setEndPoint("/auth/validateAccessToken");
