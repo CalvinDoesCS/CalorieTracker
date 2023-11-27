@@ -8,6 +8,7 @@ import com.calvindoescs.dietTracker.payload.FoodLogResponse;
 import com.calvindoescs.dietTracker.service.FoodLogService;
 import com.calvindoescs.dietTracker.service.JwtService;
 import com.calvindoescs.dietTracker.service.UserService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -3,9 +3,10 @@ import FoodListBox from "./FoodListBox";
 
 interface Props {
   boxTitles: string[];
+  selectedDate: Date;
 }
 
-const FoodListBoxes = ({ boxTitles }: Props) => {
+const FoodListBoxes = ({ boxTitles,selectedDate }: Props) => {
   return (
     <>
       {boxTitles.map((boxTitle, index) => (
@@ -16,7 +17,7 @@ const FoodListBoxes = ({ boxTitles }: Props) => {
           boxShadow={"lg"}
           bg={useColorModeValue("white", "gray.700")}
         >
-          <FoodListBox listName={boxTitle} />
+          <FoodListBox listName={boxTitle} selectedDate={selectedDate}/>
         </Box>
       ))}
     </>

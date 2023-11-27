@@ -18,6 +18,7 @@ import {
   PopoverTrigger,
   Stack,
   Text,
+  VStack,
   useBreakpointValue,
   useColorModeValue,
   useDisclosure,
@@ -39,6 +40,7 @@ export default function NavBar() {
         bg={useColorModeValue("white", "gray.800")}
         color={useColorModeValue("gray.600", "white")}
         minH={"60px"}
+        maxHeight={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
@@ -78,10 +80,11 @@ export default function NavBar() {
             textAlign={useBreakpointValue({ base: "center", md: "left" })}
             fontFamily={"heading"}
             color={useColorModeValue("gray.800", "white")}
+            className="bottom"
+            fontSize={"md"}
           >
-            Logo
+            Food Logger
           </Text>
-
           <Flex
             display={{ base: "none", md: "flex" }}
             ml={10}
@@ -348,10 +351,6 @@ const NAV_ITEMS: Array<NavItem> = [
   {
     label: "Food Log",
     href: "/food-logger",
-  },
-  {
-    label: "Food Log History",
-    href: "#",
   },
   {
     label: "Food Database",

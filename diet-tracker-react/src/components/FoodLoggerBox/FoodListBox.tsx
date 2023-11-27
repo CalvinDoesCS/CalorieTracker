@@ -7,7 +7,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Food from "../../entities/Food";
 import FoodLog from "../../entities/FoodLog";
 import { useAddFoods } from "../../hooks/FoodHooks";
@@ -20,20 +20,22 @@ import FoodCreateEditInput from "../FoodModal/FoodCreateEditInput";
 import FoodDropDown from "../FoodModal/FoodDropDown";
 import ModalLayout from "../FoodModal/ModalLayout";
 import FoodList from "./FoodList";
-import getFormattedDate from "../../util/formattedDate";
+import getFormattedDateToday from "../../util/formattedDate";
 
 interface Props {
   listName: string;
+  selectedDate: Date;
 }
 
-const FoodListBox = ({ listName }: Props) => {
+const FoodListBox = ({ listName, selectedDate }: Props) => {
   const [totalCalorie, setTotalCalorie] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const addFoodLog = useAddFoodLog(listName);
-  const deleteFoodLog = useDeleteFoodLog(listName);
-  const { data, isLoading, error } = useFoodLogs(
+  const date = getFormattedDateToday("year-month-day", selectedDate);
+  const addFoodLog = useAddFoodLog(listName, date);
+  const deleteFoodLog = useDeleteFoodLog(listName,date);
+  const { data, isLoading, error, refetch } = useFoodLogs(
     listName,
-    getFormattedDate("year-month-day")
+    date
   );
   const addFoods = useAddFoods();
 
@@ -48,12 +50,18 @@ const FoodListBox = ({ listName }: Props) => {
     const foodLog: FoodLog = {
       id: 0,
       food: food,
-      logDate: getFormattedDate("year-month-day"),
+      logDate: date,
       mealType: listName,
     };
     addFoodLog.mutate(foodLog);
     setSelectedFood(undefined);
   };
+
+  useEffect(() => {
+    // Call refetch when selectedDate changes
+    refetch();
+  }, [listName, selectedDate, refetch]);
+
   const onAddFood = (food: Food) => {
     addFoods.mutate(food, {
       onSuccess: (res) => {
@@ -86,7 +94,9 @@ const FoodListBox = ({ listName }: Props) => {
         justifyContent={"space-between"}
       >
         <Button onClick={onOpen}> + Add {listName} Item</Button>
-        <Center>Total Calories: {totalCalorie}</Center>
+        <Center>
+          Total {listName} Calories: {totalCalorie}
+        </Center>
       </Flex>
       <ModalLayout
         isOpen={isOpen}
