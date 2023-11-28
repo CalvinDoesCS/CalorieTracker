@@ -4,7 +4,7 @@ import DateDropDown from "../components/DateDropDown";
 import FoodListBoxes from "../components/FoodLoggerBox/FoodListBoxes";
 import "../index.css";
 import getFormattedDateToday from "../util/formattedDate";
-import useCalorieDateStore from "../components/FoodLoggerBox/store";
+import useCalorieDateStore from "../components/store";
 
 const FoodTablePage = () => {
   const calorieDateStore = useCalorieDateStore();

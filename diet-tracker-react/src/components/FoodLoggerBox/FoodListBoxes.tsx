@@ -12,9 +12,7 @@ const FoodListBoxes = () => {
           boxShadow={"lg"}
           bg={useColorModeValue("white", "gray.700")}
         >
-          <FoodListBox
-            listName={boxTitle}
-          />
+          <FoodListBox listName={boxTitle} />
         </Box>
       ))}
     </>

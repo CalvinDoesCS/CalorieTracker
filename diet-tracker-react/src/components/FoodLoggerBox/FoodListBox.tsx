@@ -21,7 +21,7 @@ import FoodDropDown from "../FoodModal/FoodDropDown";
 import ModalLayout from "../FoodModal/ModalLayout";
 import FoodList from "./FoodList";
 import getFormattedDateToday from "../../util/formattedDate";
-import useCalorieDateStore, { CalorieDateStore } from "./store";
+import useCalorieDateStore, { CalorieDateStore } from "../store";
 
 interface Props {
   listName: string;

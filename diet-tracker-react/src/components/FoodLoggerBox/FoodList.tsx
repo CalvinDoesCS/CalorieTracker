@@ -1,7 +1,7 @@
 import { DeleteIcon } from "@chakra-ui/icons";
 import { Box, HStack, IconButton, Text } from "@chakra-ui/react";
-import FoodLog from "../../entities/FoodLog";
 import { useEffect } from "react";
+import FoodLog from "../../entities/FoodLog";
 
 interface Props {
   foodList: FoodLog[];

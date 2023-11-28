@@ -1,7 +1,7 @@
 import { HStack } from "@chakra-ui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import useCalorieDateStore from "./FoodLoggerBox/store";
+import useCalorieDateStore from "./store";
 
 const DateDropDown = () => {
   const calorieDateStore = useCalorieDateStore();

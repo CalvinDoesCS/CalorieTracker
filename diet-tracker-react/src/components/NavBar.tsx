@@ -18,10 +18,9 @@ import {
   PopoverTrigger,
   Stack,
   Text,
-  VStack,
   useBreakpointValue,
   useColorModeValue,
-  useDisclosure,
+  useDisclosure
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import useSignOut from "../hooks/useSignOut";
