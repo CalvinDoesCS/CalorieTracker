@@ -8,7 +8,6 @@ import useCalorieDateStore from "../components/FoodLoggerBox/store";
 
 const FoodTablePage = () => {
   const calorieDateStore = useCalorieDateStore();
-  const [totalCalorie, setTotalCalorie] = useState(0);
   return (
     <VStack spacing={4}>
       <Heading>
@@ -16,13 +15,18 @@ const FoodTablePage = () => {
         Food Logger for{" "}
         {getFormattedDateToday("month-day-year", calorieDateStore.selectedDate)}
       </Heading>
-      <FoodListBoxes/>
+      <FoodListBoxes />
       <HStack
         justifyContent={"space-between"}
         width={"md"}
       >
         <DateDropDown />
-        <Text>Total Day Calories: {totalCalorie}</Text>
+        <Text>
+          Total Day Calories:{" "}
+          {calorieDateStore.calories.breakfastCalorie +
+            calorieDateStore.calories.lunchCalorie +
+            calorieDateStore.calories.dinnerCalorie}
+        </Text>
       </HStack>
     </VStack>
   );
