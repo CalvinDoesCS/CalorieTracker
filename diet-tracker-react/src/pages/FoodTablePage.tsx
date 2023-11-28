@@ -1,10 +1,9 @@
 import { HStack, Heading, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
 import DateDropDown from "../components/DateDropDown";
 import FoodListBoxes from "../components/FoodLoggerBox/FoodListBoxes";
+import useCalorieDateStore from "../components/store";
 import "../index.css";
 import getFormattedDateToday from "../util/formattedDate";
-import useCalorieDateStore from "../components/store";
 
 const FoodTablePage = () => {
   const calorieDateStore = useCalorieDateStore();
