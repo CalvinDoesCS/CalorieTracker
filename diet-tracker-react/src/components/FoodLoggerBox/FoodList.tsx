@@ -19,7 +19,6 @@ const FoodList = ({ foodList, handleDelete, calorie, setCalorie }: Props) => {
 
     // Conditionally update the store only when the calorie changes
     if (totalCalories !== calorie) {
-      console.log(totalCalories);
       setCalorie(totalCalories);
     }
 
