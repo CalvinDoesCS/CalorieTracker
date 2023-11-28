@@ -1,6 +1,6 @@
 # Calorie Tracker App
 
-![App Screenshot](link-to-your-screenshot.png)
+![App Screenshot](https://github.com/CalvinDoesCS/CalorieTracker/blob/main/CalorieTracker.png)
 
 Track your daily calorie intake effortlessly with our Calorie Tracker App. This application is built using React for the frontend, Spring Boot for the backend, and a variety of libraries including Chakra UI, Zustand, React Hook Forms, and React Router DOM for an efficient and user-friendly experience.
 
