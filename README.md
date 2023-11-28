@@ -23,7 +23,6 @@ Track your daily calorie intake effortlessly with our Calorie Tracker App. This 
 - **Loading and Error Pages:**
   - *Goal:* Implement loading screens and error pages for a smoother user experience during data fetching or in case of errors.
   - *Approach:* Design and integrate loading animations or screens for asynchronous processes. Create clear and informative error pages with actionable guidance for users.
-  - 
 ## Installation
 
 1. Clone the repository: `git clone https://github.com/your-username/calorie-tracker-app.git`
