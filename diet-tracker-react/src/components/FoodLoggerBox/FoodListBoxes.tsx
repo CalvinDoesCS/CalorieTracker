@@ -1,12 +1,7 @@
 import { Box, useColorModeValue } from "@chakra-ui/react";
 import FoodListBox from "./FoodListBox";
-
-interface Props {
-  boxTitles: string[];
-  selectedDate: Date;
-}
-
-const FoodListBoxes = ({ boxTitles,selectedDate }: Props) => {
+const FoodListBoxes = () => {
+  const boxTitles = ["Breakfast", "Lunch", "Dinner"];
   return (
     <>
       {boxTitles.map((boxTitle, index) => (
@@ -17,7 +12,9 @@ const FoodListBoxes = ({ boxTitles,selectedDate }: Props) => {
           boxShadow={"lg"}
           bg={useColorModeValue("white", "gray.700")}
         >
-          <FoodListBox listName={boxTitle} selectedDate={selectedDate}/>
+          <FoodListBox
+            listName={boxTitle}
+          />
         </Box>
       ))}
     </>

@@ -6,16 +6,24 @@ import { useEffect } from "react";
 interface Props {
   foodList: FoodLog[];
   handleDelete: (foodLogId: number) => void;
-  setTotalCalorie: (calorie: number) => void;
+  calorie: number;
+  setCalorie: (calorie: number) => void;
 }
 
-const FoodList = ({ foodList, handleDelete, setTotalCalorie }: Props) => {
+const FoodList = ({ foodList, handleDelete, calorie, setCalorie }: Props) => {
   useEffect(() => {
     // Calculate total calories initially when foodList changes
     const totalCalories = foodList.reduce((total, foodLog) => {
       return total + foodLog.food.calories;
     }, 0);
-    setTotalCalorie(totalCalories);
+
+    // Conditionally update the store only when the calorie changes
+    if (totalCalories !== calorie) {
+      console.log(totalCalories);
+      setCalorie(totalCalories);
+    }
+
+    // Update calorieDateStore with the total calories
   }, [foodList]);
 
   return (

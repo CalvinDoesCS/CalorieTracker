@@ -1,22 +1,17 @@
-import { CalendarIcon } from "@chakra-ui/icons";
-import { Box, HStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { HStack } from "@chakra-ui/react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import useCalorieDateStore from "./FoodLoggerBox/store";
 
-interface Props {
-  selectedDate: Date;
-  setSelectedDate: (date: Date) => void;
-}
-
-const DateDropDown = ({ selectedDate, setSelectedDate }: Props) => {
+const DateDropDown = () => {
+  const calorieDateStore = useCalorieDateStore();
   return (
     <HStack>
       <DatePicker
         showIcon
         closeOnScroll={true}
-        selected={selectedDate}
-        onChange={(date: Date) => setSelectedDate(date)}
+        selected={calorieDateStore.selectedDate}
+        onChange={(date: Date) => calorieDateStore.setSelectedDate(date)}
         maxDate={new Date()}
       />
     </HStack>

@@ -1,7 +1,7 @@
 import {
   Box,
   Button,
-  Center,
+  Text,
   Flex,
   Heading,
   useColorModeValue,
@@ -21,22 +21,45 @@ import FoodDropDown from "../FoodModal/FoodDropDown";
 import ModalLayout from "../FoodModal/ModalLayout";
 import FoodList from "./FoodList";
 import getFormattedDateToday from "../../util/formattedDate";
+import useCalorieDateStore, { CalorieDateStore } from "./store";
 
 interface Props {
   listName: string;
-  selectedDate: Date;
 }
 
-const FoodListBox = ({ listName, selectedDate }: Props) => {
-  const [totalCalorie, setTotalCalorie] = useState(0);
+const getCalorieMealType = (name: string, store: CalorieDateStore) => {
+  switch (name) {
+    case "Breakfast":
+      return {
+        calorie: store.calories.breakfastCalorie,
+        setCalorie: store.setBreakfastCalorie,
+      };
+      break;
+    case "Lunch":
+      return {
+        calorie: store.calories.lunchCalorie,
+        setCalorie: store.setLunchCalorie,
+      };
+      break;
+    default:
+      return {
+        calorie: store.calories.dinnerCalorie,
+        setCalorie: store.setDinnerCalorie,
+      };
+      break;
+  }
+};
+
+const FoodListBox = ({ listName }: Props) => {
+  const calorieDateStore = useCalorieDateStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const date = getFormattedDateToday("year-month-day", selectedDate);
-  const addFoodLog = useAddFoodLog(listName, date);
-  const deleteFoodLog = useDeleteFoodLog(listName,date);
-  const { data, isLoading, error, refetch } = useFoodLogs(
-    listName,
-    date
+  const date = getFormattedDateToday(
+    "year-month-day",
+    calorieDateStore.selectedDate
   );
+  const addFoodLog = useAddFoodLog(listName, date);
+  const deleteFoodLog = useDeleteFoodLog(listName, date);
+  const { data, isLoading, error, refetch } = useFoodLogs(listName, date);
   const addFoods = useAddFoods();
 
   const [selectedFood, setSelectedFood] = useState<Food>();
@@ -60,7 +83,7 @@ const FoodListBox = ({ listName, selectedDate }: Props) => {
   useEffect(() => {
     // Call refetch when selectedDate changes
     refetch();
-  }, [listName, selectedDate, refetch]);
+  }, [listName, calorieDateStore.selectedDate, refetch]);
 
   const onAddFood = (food: Food) => {
     addFoods.mutate(food, {
@@ -76,6 +99,7 @@ const FoodListBox = ({ listName, selectedDate }: Props) => {
   if (error) {
     return;
   }
+
   return (
     <Box>
       <Heading
@@ -86,7 +110,8 @@ const FoodListBox = ({ listName, selectedDate }: Props) => {
       </Heading>
       <FoodList
         handleDelete={handleDelete}
-        setTotalCalorie={setTotalCalorie}
+        setCalorie={getCalorieMealType(listName, calorieDateStore).setCalorie}
+        calorie={getCalorieMealType(listName, calorieDateStore).calorie}
         foodList={data || []}
       />
       <Flex
@@ -94,9 +119,10 @@ const FoodListBox = ({ listName, selectedDate }: Props) => {
         justifyContent={"space-between"}
       >
         <Button onClick={onOpen}> + Add {listName} Item</Button>
-        <Center>
-          Total {listName} Calories: {totalCalorie}
-        </Center>
+        <Text>
+          Total {listName} Calories:{" "}
+          {getCalorieMealType(listName, calorieDateStore).calorie}
+        </Text>
       </Flex>
       <ModalLayout
         isOpen={isOpen}
