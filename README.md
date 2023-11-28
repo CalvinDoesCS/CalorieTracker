@@ -12,7 +12,18 @@ Track your daily calorie intake effortlessly with our Calorie Tracker App. This 
 - **Form Handling**: React Hook Forms simplifies form management for a smoother user experience.
 - **Easy Navigation**: Leveraging React Router DOM for seamless transitions between app sections.
 - **Token-based Authentication**: Implements access tokens and refresh tokens for secure user authentication and authorization.
+## Future Goals
+- **Improved Color Theme:**
+  - *Goal:* Enhance the project's visual appeal by refining the color theme for a more cohesive and pleasant user experience.
+  - *Approach:* Conduct research on color palettes and user preferences, and implement changes gradually.
 
+- **Enhanced Responsive Design:**
+  - *Goal:* Optimize the project for various devices and screen sizes to ensure a seamless user experience across all platforms.
+  - *Approach:* Utilize responsive design principles, conduct testing on different devices, and implement CSS media queries or frameworks as needed.
+- **Loading and Error Pages:**
+  - *Goal:* Implement loading screens and error pages for a smoother user experience during data fetching or in case of errors.
+  - *Approach:* Design and integrate loading animations or screens for asynchronous processes. Create clear and informative error pages with actionable guidance for users.
+  - 
 ## Installation
 
 1. Clone the repository: `git clone https://github.com/your-username/calorie-tracker-app.git`
