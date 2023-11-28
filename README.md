@@ -35,4 +35,4 @@ Contributions are welcome! If you have any suggestions, improvements, or bug fix
 
 ## License
 
-This project is licensed under the [MIT License](link-to-license).
+This project is licensed under the [MIT License](https://github.com/CalvinDoesCS/CalorieTracker/blob/main/LICENSE).
