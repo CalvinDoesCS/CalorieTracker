@@ -26,7 +26,7 @@ import FoodCreateEditInput from "./FoodModal/FoodCreateEditInput";
 import ModalLayout from "./FoodModal/ModalLayout";
 
 export const FoodsTable = () => {
-  const { data, error, isLoading } = useFoods();
+  const { data, error } = useFoods();
   const deleteFoods = useDeleteFoods();
 
   const addFoods = useAddFoods();

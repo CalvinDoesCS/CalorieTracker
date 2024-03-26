@@ -59,7 +59,7 @@ const FoodListBox = ({ listName }: Props) => {
   );
   const addFoodLog = useAddFoodLog(listName, date);
   const deleteFoodLog = useDeleteFoodLog(listName, date);
-  const { data, isLoading, error, refetch } = useFoodLogs(listName, date);
+  const { data, error, refetch } = useFoodLogs(listName, date);
   const addFoods = useAddFoods();
 
   const [selectedFood, setSelectedFood] = useState<Food>();

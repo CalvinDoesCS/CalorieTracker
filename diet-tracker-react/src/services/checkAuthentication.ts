@@ -12,7 +12,7 @@ export const checkAuthentication = (
     apiClient.setAccessToken(token);
     apiClient
       .post()
-      .then((res) => {
+      .then(() => {
         console.log("Valid Access Token");
         resolve(true); // Resolve the promise with true if access token is valid
       })
@@ -39,7 +39,7 @@ export const handleRefreshToken = (
         setToken(res.access_token, res.expires_in, res.email, res.token_type);
         resolve(true); // Resolve the promise with true after token refresh
       })
-      .catch((error: any) => {
+      .catch(() => {
         console.log("Failed to Refresh Token");
         clearToken();
         resolve(false);

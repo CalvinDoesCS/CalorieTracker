@@ -39,7 +39,7 @@ export const useDeleteFoods = () => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newFood, context) => {
+    onError: (_err, _newFood, context) => {
       queryClient.setQueryData(["foods"], context?.previousFoods);
     },
     // Always refetch after error or success:
@@ -74,7 +74,7 @@ export const useAddFoods = () => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newFood, context) => {
+    onError: (_err, _newFood, context) => {
       queryClient.setQueryData(["foods"], context?.previousFoods);
     },
     // Always refetch after error or success:
@@ -111,7 +111,7 @@ export const useEditFoods = () => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newFood, context) => {
+    onError: (_err, _newFood, context) => {
       queryClient.setQueryData(["foods"], context?.previousFoods);
     },
     // Always refetch after error or success:

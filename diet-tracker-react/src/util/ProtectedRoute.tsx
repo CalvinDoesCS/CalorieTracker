@@ -1,5 +1,4 @@
-import { ReactNode, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { ReactNode } from "react";
 import { useIsLoggedIn } from "../hooks/useIsLoggedIn";
 
 interface Props {

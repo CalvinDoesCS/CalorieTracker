@@ -43,7 +43,7 @@ export const useAddFoodLog = (mealType: string, logDate: string) => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newFood, context) => {
+    onError: (_err, _newFood, context) => {
       queryClient.setQueryData(
         ["foodlog", mealType, logDate],
         context?.previousFoodLog
@@ -86,7 +86,7 @@ export const useDeleteFoodLog = (mealType: string, logDate: string) => {
     },
     // If the mutation fails,
     // use the context returned from onMutate to roll back
-    onError: (err, newFood, context) => {
+    onError: (_err, _newFood, context) => {
       queryClient.setQueryData(
         ["foodlog", mealType, logDate],
         context?.previousFoods

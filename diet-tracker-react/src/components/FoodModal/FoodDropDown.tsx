@@ -11,7 +11,7 @@ interface Props {
 }
 
 const FoodDropDown = ({ onSubmit, onClose, formId, foodSelected }: Props) => {
-  const { data, error, isLoading } = useFoods();
+  const { data } = useFoods();
   const [selectedFood, setSelectedFood] = useState<Food>();
 
   type GroupedOption = {
