@@ -1,0 +1,35 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: dietRootPassword
+      MYSQL_USER: dietDB
+      MYSQL_PASSWORD: LetsDiet!123
+      MYSQL_DATABASE: diet_directory
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./diet_directory.sql:/docker-entrypoint-initdb.d/init.sql
+  spring-boot-app:
+      build:
+        context: ./diet-tracker-spring-boot
+        dockerfile: Dockerfile
+      ports:
+        - "8080:8080"
+      depends_on:
+        - mysql
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/diet_directory
+        SPRING_DATASOURCE_USERNAME: dietDB
+        SPRING_DATASOURCE_PASSWORD: LetsDiet!123
+  react-app:
+      build:
+        context: ./diet-tracker-react
+        dockerfile: Dockerfile
+      ports:
+        - "3000:80"
+
+volumes:
+  db-data:
